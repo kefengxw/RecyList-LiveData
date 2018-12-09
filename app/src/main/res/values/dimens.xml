@@ -12,4 +12,6 @@
     <dimen name="item_text_country_left_right_margin">16dp</dimen>
     <dimen name="item_image_country_top_bottom_margin">24dp</dimen>
 
+    <dimen name="item_split_line_height">8dp</dimen>
+
 </resources>

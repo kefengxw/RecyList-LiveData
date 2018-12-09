@@ -8,4 +8,5 @@
     <color name="colorGray">#CCCCCC</color>
     <color name="colorRed">#E30508</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorSplitLine">#CCCCCC</color>
 </resources>
