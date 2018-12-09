@@ -1,5 +1,6 @@
-package com.rebtel.android;
+package com.rebtel.android.view;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
@@ -9,12 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rebtel.android.R;
+
 import java.util.ArrayList;
 
 public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
 
     private ArrayList<ItemRecyclerDisplayData> mData = new ArrayList<>();
     private OnItemClickListener mListener = null;
+    private Context mCtx = null;
+
+    public RecyclerAdapter(Context ctx) {
+        this.mCtx = ctx;
+    }
 
     public void setData(ArrayList<ItemRecyclerDisplayData> data) {
         this.mData = data;
@@ -32,8 +40,12 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int iPosition) {
         ItemRecyclerDisplayData currentData = mData.get(iPosition);
 
-        holder.mIvFlag.setImageResource(R.drawable.ic_flag_gb);//changer later
-        holder.mTvName.setText("China (+86)");
+        String flag = ("ic_flag_" + currentData.getCountryFlag().toLowerCase());
+        int flagId = mCtx.getResources().getIdentifier(flag, "drawable", mCtx.getPackageName());
+        holder.mIvFlag.setImageResource(flagId);
+
+        String country = currentData.getCountryName() + " (+" + currentData.getCallCode() + ")";
+        holder.mTvName.setText(country);
     }
 
     @Override

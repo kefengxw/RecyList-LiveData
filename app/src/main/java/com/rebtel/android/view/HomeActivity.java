@@ -1,4 +1,4 @@
-package com.rebtel.android;
+package com.rebtel.android.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import static com.rebtel.android.Configuration.INTENT_CALL_ID;
-import static com.rebtel.android.Configuration.INTENT_FLAG_ID;
-import static com.rebtel.android.Configuration.INTENT_RQ_CODE;
+import com.rebtel.android.R;
+
+import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_CALL_ID;
+import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_FLAG_ID;
+import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
 
 public class HomeActivity extends AppCompatActivity {
 

@@ -1,23 +1,34 @@
-package com.rebtel.android;
+package com.rebtel.android.view;
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.rebtel.android.R;
+import com.rebtel.android.model.remote.Resource;
+import com.rebtel.android.model.repository.DisplayData;
+import com.rebtel.android.viewmodel.RecyListDataViewModel;
 
-import static com.rebtel.android.Configuration.INTENT_CALL_ID;
-import static com.rebtel.android.Configuration.INTENT_FLAG_ID;
-import static com.rebtel.android.Configuration.INTENT_RQ_CODE;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_CALL_ID;
+import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_FLAG_ID;
+import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
 
 public class CountryActivity extends AppCompatActivity {
 
     private ArrayList<ItemRecyclerDisplayData> mItemList = new ArrayList<>();
+    private RecyListDataViewModel mViewModel = null;
+    private RecyclerAdapter adapter = null;
     private RecyclerView mRecyclerView = null;
     private Context mCtx = null;
 
@@ -32,6 +43,7 @@ public class CountryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_country);
 
         setContext();
+        initViewModel();
         buildRecyclerView();
     }
 
@@ -39,16 +51,19 @@ public class CountryActivity extends AppCompatActivity {
         mCtx = this;
     }
 
+    private void initViewModel() {
+        mViewModel = ViewModelProviders.of(CountryActivity.this).get(RecyListDataViewModel.class);
+        mViewModel.getLiveDataAllDisplayData().observe(this, observerAllData);
+    }
+
     private void buildRecyclerView() {
 
-        prepareItemListData();
-        RecyclerAdapter adapter = new RecyclerAdapter();
-
         mRecyclerView = findViewById(R.id.recyclerView);
-        mRecyclerView.setAdapter(adapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
-        adapter.setData(mItemList);
+
+        adapter = new RecyclerAdapter(mCtx);
         adapter.setItemClickListener(itemListener);
+        mRecyclerView.setAdapter(adapter);
     }
 
     private RecyclerAdapter.OnItemClickListener itemListener = new RecyclerAdapter.OnItemClickListener() {
@@ -73,22 +88,21 @@ public class CountryActivity extends AppCompatActivity {
         intent.putExtras(bundle);
     }
 
-    private void prepareItemListData() {
-        mItemList.add(new ItemRecyclerDisplayData("cn1", "cn1"));
-        mItemList.add(new ItemRecyclerDisplayData("cn2", "cn2"));
-        mItemList.add(new ItemRecyclerDisplayData("cn3", "cn3"));
-        mItemList.add(new ItemRecyclerDisplayData("cn4", "cn4"));
-        mItemList.add(new ItemRecyclerDisplayData("cn5", "cn5"));
-        mItemList.add(new ItemRecyclerDisplayData("cn6", "cn6"));
-        mItemList.add(new ItemRecyclerDisplayData("cn7", "cn7"));
-        mItemList.add(new ItemRecyclerDisplayData("cn8", "cn8"));
-        mItemList.add(new ItemRecyclerDisplayData("cn9", "cn9"));
-        mItemList.add(new ItemRecyclerDisplayData("cn10", "cn10"));
-        mItemList.add(new ItemRecyclerDisplayData("cn11", "cn11"));
-        mItemList.add(new ItemRecyclerDisplayData("cn12", "cn12"));
-        mItemList.add(new ItemRecyclerDisplayData("cn13", "cn13"));
-        mItemList.add(new ItemRecyclerDisplayData("cn14", "cn14"));
-        mItemList.add(new ItemRecyclerDisplayData("cn15", "cn15"));
-        mItemList.add(new ItemRecyclerDisplayData("cn16", "cn16"));
+    private Observer<Resource<List<DisplayData>>> observerAllData = new Observer<Resource<List<DisplayData>>>() {
+        @Override
+        public void onChanged(@Nullable Resource<List<DisplayData>> listResource) {
+            if ((listResource.mData != null) && (listResource.mData.size() != 0)) {
+                prepareItemListData(listResource.mData);
+                adapter.setData(mItemList);
+            }
+        }
+    };
+
+    private void prepareItemListData(List<DisplayData> it) {
+        DisplayData tmp = null;
+        for (int i = 0; i < it.size(); i++) {
+            tmp = it.get(i);
+            mItemList.add(new ItemRecyclerDisplayData(tmp.alpha2Code, tmp.name, String.valueOf(tmp.callCode)));
+        }
     }
 }

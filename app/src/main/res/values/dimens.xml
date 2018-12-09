@@ -7,7 +7,7 @@
     <!--<dimen name="guideline_guideline_horizontal">8dp</dimen>-->
 
     <dimen name="recycler_view_left_right_margin">32dp</dimen>
-    <dimen name="item_text_country_text_size">24sp</dimen>
+    <dimen name="item_text_country_text_size">18sp</dimen>
 
     <dimen name="item_text_country_left_right_margin">16dp</dimen>
     <dimen name="item_image_country_top_bottom_margin">24dp</dimen>

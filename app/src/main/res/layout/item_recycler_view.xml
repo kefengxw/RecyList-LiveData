@@ -27,9 +27,8 @@
         android:layout_marginRight="@dimen/item_text_country_left_right_margin"
         android:layout_weight="16"
         android:gravity="center|start"
-        android:textStyle="bold"
         android:textColor="@color/colorBlack"
         android:text="@string/item_country_name"
         android:textSize="@dimen/item_text_country_text_size" />
-
+        <!--android:textStyle="bold"-->
 </LinearLayout>
