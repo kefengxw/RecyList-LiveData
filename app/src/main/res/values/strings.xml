@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RebtelTest</string>
+    <string name="telephone">+46709526653</string>
+    <string name="telephone_hint">Please Input Telephone Numbers</string>
+
+    <string name="item_country_name">China (+86)</string>
+
 </resources>

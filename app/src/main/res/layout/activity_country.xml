@@ -6,4 +6,12 @@
     android:layout_height="match_parent"
     tools:context="com.rebtel.android.CountryActivity">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/recycler_view_left_right_margin"
+        android:layout_marginRight="@dimen/recycler_view_left_right_margin"
+        tools:listitem="@layout/item_recycler_view">
+    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>
