@@ -12,7 +12,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/recycler_view_left_right_margin"
         android:layout_marginRight="@dimen/recycler_view_left_right_margin"
-        tools:listitem="@layout/item_recycler_view"></android.support.v7.widget.RecyclerView>
+        tools:listitem="@layout/item_recycler_view">
+    </android.support.v7.widget.RecyclerView>
 
     <com.rebtel.android.view.IndexBarView
         android:id="@+id/index_bar"
@@ -32,7 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F"
-        android:background="@color/colorGreen"
+        android:textColor="@color/colorIndexBarHintText"
+        android:background="@drawable/index_bar_hint_text_bg"
         android:textSize="@dimen/index_bar_hint_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

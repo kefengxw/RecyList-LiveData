@@ -22,6 +22,7 @@ import com.rebtel.android.viewmodel.RecyListDataViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.INVISIBLE;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_CALL_ID;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_FLAG_ID;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
@@ -64,6 +65,9 @@ public class CountryActivity extends AppCompatActivity {
     private void initView() {
         mIndexBarView = findViewById(R.id.index_bar);
         mIndexBarText = findViewById(R.id.index_bar_text);
+        mIndexBarText.setVisibility(INVISIBLE);//Default
+
+        mIndexBarView.setHintText(mIndexBarText);
         buildRecyclerView();
     }
 
