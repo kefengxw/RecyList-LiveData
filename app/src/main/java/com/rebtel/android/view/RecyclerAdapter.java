@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rebtel.android.R;
+import com.rebtel.android.Util.UtilString;
 
 import java.util.ArrayList;
 
@@ -120,5 +121,19 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
             mHolder.mIvFlag.setImageResource(mFlagId);
             mHolder.mTvName.setText(mCountry);
         }
+    }
+
+    public int getPositionByIndex(String it) {
+        if ((mData == null) || ('A' > it.charAt(0)) || (it.charAt(0) > 'Z')) {
+            return -1;
+        }
+
+        for (int i = 0; i < mData.size(); i++) {
+            if (UtilString.getIndex(mData.get(i).getName().toUpperCase()).equals(it)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

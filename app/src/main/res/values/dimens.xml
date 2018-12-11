@@ -17,7 +17,7 @@
 
     <dimen name="index_bar_text_size">24sp</dimen>
     <dimen name="index_bar_margin">8dp</dimen>
-    <dimen name="index_bar_hint_text_size">32sp</dimen>
+    <dimen name="index_bar_hint_text_size">48sp</dimen>
     <dimen name="index_bar_hint_text_radius">8dp</dimen>
 
 </resources>

@@ -18,6 +18,7 @@ import java.util.List;
 
 public class IndexBarView extends View {
 
+    private OnTouchEventListener mListener = null;
     private Resources mResources = null;
     private List<String> mLetters = null;
     private TextView mHintTextView = null;
@@ -166,8 +167,20 @@ public class IndexBarView extends View {
     private void handleTouchEventActionMove() {
         mHintTextView.setVisibility(VISIBLE);
         if ((mChoosePosition != mOldChoosePosition) && (mChoosePosition >= 0) && (mChoosePosition < mLetters.size())) {
-            mHintTextView.setText(mLetters.get(mChoosePosition));
+            String cur = mLetters.get(mChoosePosition);
+            mHintTextView.setText(cur);
+            if (mListener != null){
+                mListener.onTouchListener(cur);
+            }
         }
         mOldChoosePosition = mChoosePosition;
+    }
+
+    public interface OnTouchEventListener{
+        public void onTouchListener(String it);
+    }
+
+    public void setOnTouchEventListener(OnTouchEventListener it){
+        mListener = it;
     }
 }

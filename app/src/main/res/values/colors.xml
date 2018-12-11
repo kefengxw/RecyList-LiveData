@@ -14,7 +14,7 @@
     <color name="colorRecyclerTitleText">#000000</color>
 
     <color name="colorIndexBarText">#000000</color>
-    <color name="colorIndexBarHintText">#E30508</color>
+    <color name="colorIndexBarHintText">@android:color/white</color>
     <color name="colorIndexBarHintTextBg">#008577</color>
     <color name="colorIndexBarChooseText">#00FF00</color>
     <color name="colorIndexBarPressBg">#CCCCCC</color>

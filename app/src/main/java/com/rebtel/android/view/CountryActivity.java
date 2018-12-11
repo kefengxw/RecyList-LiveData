@@ -63,12 +63,8 @@ public class CountryActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mIndexBarView = findViewById(R.id.index_bar);
-        mIndexBarText = findViewById(R.id.index_bar_text);
-        mIndexBarText.setVisibility(INVISIBLE);//Default
-
-        mIndexBarView.setHintText(mIndexBarText);
         buildRecyclerView();
+        buildIndexBarView();
     }
 
     private void buildRecyclerView() {
@@ -85,6 +81,26 @@ public class CountryActivity extends AppCompatActivity {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.addItemDecoration(title);
     }
+
+    private void buildIndexBarView() {
+        mIndexBarView = findViewById(R.id.index_bar);
+        mIndexBarText = findViewById(R.id.index_bar_text);
+        mIndexBarText.setVisibility(INVISIBLE);//Default
+
+        mIndexBarView.setHintText(mIndexBarText);
+        mIndexBarView.setOnTouchEventListener(indexListener);
+    }
+
+    private IndexBarView.OnTouchEventListener indexListener = new IndexBarView.OnTouchEventListener() {
+        @Override
+        public void onTouchListener(String it) {
+            int position = adapter.getPositionByIndex(it);
+            if (-1 != position){
+                //mRecyclerView.scrollToPosition(position);
+                ((LinearLayoutManager)mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
+            }
+        }
+    };
 
     private RecyclerAdapter.OnItemClickListener itemListener = new RecyclerAdapter.OnItemClickListener() {
         @Override

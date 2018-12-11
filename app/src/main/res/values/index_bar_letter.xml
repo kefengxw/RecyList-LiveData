@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="indexBarLetter">
-        <item>\u0023</item>
-        <item>\u2606</item>
+        <!--<item>\u0023</item>-->
+        <!--<item>\u2606</item>-->
         <item>A</item>
         <item>B</item>
         <item>C</item>
@@ -29,6 +29,6 @@
         <item>X</item>
         <item>Y</item>
         <item>Z</item>
-        <item>#</item>
+        <!--<item>#</item>-->
     </array>
 </resources>
