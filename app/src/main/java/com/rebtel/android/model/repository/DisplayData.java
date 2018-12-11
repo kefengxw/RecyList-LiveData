@@ -8,5 +8,5 @@ public class DisplayData {
     @ColumnInfo(name = "alpha2Code")
     public String alpha2Code;
     @ColumnInfo(name = "callCode")
-    public int callCode;
+    public String callCode;
 }

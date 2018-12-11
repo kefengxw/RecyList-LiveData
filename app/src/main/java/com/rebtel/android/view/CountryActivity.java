@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.rebtel.android.R;
 import com.rebtel.android.model.remote.Resource;
@@ -31,6 +32,9 @@ public class CountryActivity extends AppCompatActivity {
     private RecyListDataViewModel mViewModel = null;
     private RecyclerAdapter adapter = null;
     private RecyclerView mRecyclerView = null;
+    private TitleDecoration title = null;
+    private TextView mIndexBarText = null;
+    private IndexBarView mIndexBarView = null;
     private Context mCtx = null;
 
     public static void start(@NonNull Activity start, Context ctx) {
@@ -45,7 +49,7 @@ public class CountryActivity extends AppCompatActivity {
 
         setContext();
         initViewModel();
-        buildRecyclerView();
+        initView();
     }
 
     private void setContext() {
@@ -57,6 +61,12 @@ public class CountryActivity extends AppCompatActivity {
         mViewModel.getLiveDataAllDisplayData().observe(this, observerAllData);
     }
 
+    private void initView() {
+        mIndexBarView = findViewById(R.id.index_bar);
+        mIndexBarText = findViewById(R.id.index_bar_text);
+        buildRecyclerView();
+    }
+
     private void buildRecyclerView() {
 
         mRecyclerView = findViewById(R.id.recycler_view);
@@ -66,8 +76,10 @@ public class CountryActivity extends AppCompatActivity {
         adapter.setItemClickListener(itemListener);
         mRecyclerView.setAdapter(adapter);
 
+        title = new TitleDecoration(mCtx);
+
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mRecyclerView.addItemDecoration(new TitleDecoration(mCtx));
+        mRecyclerView.addItemDecoration(title);
     }
 
     private RecyclerAdapter.OnItemClickListener itemListener = new RecyclerAdapter.OnItemClickListener() {
@@ -80,7 +92,7 @@ public class CountryActivity extends AppCompatActivity {
 
     private void encodeSelectItemToIntent(ItemRecyclerDisplayData data) {
         Intent bIntent = new Intent();
-        setIntentPara(bIntent, data.getCountryFlag(), data.getCountryName());
+        setIntentPara(bIntent, data.getAlpha2Code(), data.getCallCode());
 
         setResult(RESULT_OK, bIntent);
     }
@@ -98,6 +110,9 @@ public class CountryActivity extends AppCompatActivity {
             if ((listResource.mData != null) && (listResource.mData.size() != 0)) {
                 prepareItemListData(listResource.mData);
                 adapter.setData(mItemList);
+                if (title != null) {
+                    title.setData(mItemList);
+                }
             }
         }
     };
@@ -106,7 +121,7 @@ public class CountryActivity extends AppCompatActivity {
         DisplayData tmp = null;
         for (int i = 0; i < it.size(); i++) {
             tmp = it.get(i);
-            mItemList.add(new ItemRecyclerDisplayData(tmp.alpha2Code, tmp.name, String.valueOf(tmp.callCode)));
+            mItemList.add(new ItemRecyclerDisplayData(tmp.alpha2Code, tmp.name, tmp.callCode));
         }
     }
 }

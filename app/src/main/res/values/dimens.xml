@@ -12,6 +12,10 @@
     <dimen name="item_text_country_left_right_margin">16dp</dimen>
     <dimen name="item_image_country_top_bottom_margin">24dp</dimen>
 
-    <dimen name="item_split_line_height">8dp</dimen>
+    <dimen name="item_recycler_title_height">64dp</dimen>
+    <dimen name="item_recycler_title_text_size">10sp</dimen>
+
+    <dimen name="index_bar_text_size">16sp</dimen>
+    <dimen name="index_bar_hint_text_size">32sp</dimen>
 
 </resources>

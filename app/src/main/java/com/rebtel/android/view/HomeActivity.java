@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.rebtel.android.R;
 
+import static com.rebtel.android.model.data.ExternalDataConfiguration.DEFAULT_CALL_CODE;
+import static com.rebtel.android.model.data.ExternalDataConfiguration.DEFAULT_FLAG;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_CALL_ID;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_FLAG_ID;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
@@ -22,8 +24,8 @@ public class HomeActivity extends AppCompatActivity {
     private EditText mTextTelNum = null;
     private ImageView mImageFlag = null;
     private Button mButtonCall = null;
+    private int mFlagId = 0;
     private String mCallId = null;
-    private String mFlagId = null;
     private Context mCtx = null;
 
     @Override
@@ -33,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
         setContext();
         initView();
+        initContent();
     }
 
     private void setContext() {
@@ -48,6 +51,12 @@ public class HomeActivity extends AppCompatActivity {
 
         mImageFlag = findViewById(R.id.flag);
         mImageFlag.setOnClickListener(imageFlagListener);
+    }
+
+    private void initContent(){
+        mFlagId = DEFAULT_FLAG;
+        mCallId = DEFAULT_CALL_CODE;
+        updateView();//only once
     }
 
     private View.OnClickListener buttonCallListener = new View.OnClickListener() {
@@ -80,15 +89,24 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getIntentPara(Intent intent) {
         //Intent intent = getIntent();
+        String flagIdtmp = null;
+        String callIdtmp = null;
         Bundle bundle = intent.getExtras();
         if (null != bundle) {
-            mFlagId = bundle.getString(INTENT_FLAG_ID);
-            mCallId = bundle.getString(INTENT_CALL_ID);
+            flagIdtmp = bundle.getString(INTENT_FLAG_ID);
+            callIdtmp = bundle.getString(INTENT_CALL_ID);
         }
+        converter2ResIdAndCallCode(flagIdtmp, callIdtmp);
+    }
+
+    private void converter2ResIdAndCallCode(String flagId, String callId){
+        String flag = ("ic_flag_" + flagId.toLowerCase());
+        mFlagId = mCtx.getResources().getIdentifier(flag, "drawable", mCtx.getPackageName());
+        mCallId = "+" + callId;
     }
 
     private void updateView() {
-        mImageFlag.setImageResource(R.drawable.ic_flag_gb);
+        mImageFlag.setImageResource(mFlagId);
         mTextTelNum.setText(mCallId);
         mTextTelNum.setSelection(mCallId.length());
     }

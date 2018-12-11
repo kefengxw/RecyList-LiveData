@@ -73,7 +73,7 @@ public class DataRepository {
 
         RemoteBean item = null;
         List<String> code = null;
-        String it = null;
+        String codetmp = null;
 
         if (data == null || data.isEmpty()) {
             return;
@@ -91,12 +91,12 @@ public class DataRepository {
 
             for (int i = 0; i < code.size(); i++) {
 
-                it = code.get(i);
-                if (it.equals("") || it.contains(" ")) {
+                codetmp = code.get(i);
+                if (codetmp.equals("") || codetmp.contains(" ")) {
                     continue;
                 }
 
-                mLocalDataDao.insert(new LocalBean(item.name, item.alpha2Code, it, item.nativeName));
+                mLocalDataDao.insert(new LocalBean(item.name, item.alpha2Code, codetmp, item.nativeName));
             }
         }
     }

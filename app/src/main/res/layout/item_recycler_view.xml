@@ -15,8 +15,8 @@
         android:layout_weight="1"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_flag_gb"
         app:layout_constraintDimensionRatio="h,1:1" />
+        <!--android:src="@drawable/ic_flag_gb"-->
 
     <TextView
         android:id="@+id/item_text"

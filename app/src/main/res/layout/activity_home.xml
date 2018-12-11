@@ -13,7 +13,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_flag_gb"
         app:layout_constraintBottom_toTopOf="@+id/text_tel_number"
         app:layout_constraintEnd_toStartOf="@+id/guideline_h"
         app:layout_constraintHorizontal_bias="1.0"

@@ -20,7 +20,7 @@ public class LocalBean {
     @ColumnInfo(name = "alpha2Code")
     public String alpha2Code;
     @ColumnInfo(name = "callCode")
-    public int callCode;
+    public String callCode;
     @ColumnInfo(name = "nativeName")
     public String nativeName;
 
@@ -35,7 +35,7 @@ public class LocalBean {
         //this.id = 0;
         this.name = name;
         this.alpha2Code = alpha2Code;
-        this.callCode = Integer.parseInt(callCode);
+        this.callCode = callCode;
         this.nativeName = nativeName;
     }
 /*

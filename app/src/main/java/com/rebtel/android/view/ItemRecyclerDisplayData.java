@@ -2,30 +2,32 @@ package com.rebtel.android.view;
 
 public class ItemRecyclerDisplayData {
 
-    private String mCountryFlag;//for flag
-    private String mCountryName;//for Name
+    private String mAlpha2Code;//for flag,alpha2Code
+    private String mName;//for Name
     private String mCallCode;//for Callcode
+    private int mFlagId;//improve performance
+    private int mCallId;//improve performance
 
-    public ItemRecyclerDisplayData(String countryFlag, String countryName, String callCode) {
-        this.mCountryFlag = countryFlag;
-        this.mCountryName = countryName;
+    public ItemRecyclerDisplayData(String alpha2Code, String name, String callCode) {
+        this.mAlpha2Code = alpha2Code;
+        this.mName = name;
         this.mCallCode = callCode;
     }
 
-    public String getCountryFlag() {
-        return mCountryFlag;
+    public String getAlpha2Code() {
+        return mAlpha2Code;
     }
 
-    public void setCountryFlag(String countryFlag) {
-        this.mCountryFlag = countryFlag;
+    public void setAlpha2Code(String alpha2Code) {
+        this.mAlpha2Code = alpha2Code;
     }
 
-    public String getCountryName() {
-        return mCountryName;
+    public String getName() {
+        return mName;
     }
 
-    public void setCountryName(String countryName) {
-        this.mCountryName = countryName;
+    public void setName(String name) {
+        this.mName = name;
     }
 
     public String getCallCode() {

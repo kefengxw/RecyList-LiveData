@@ -3,10 +3,18 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorWindowBackground">@android:color/white</color>
     <color name="colorGreen">#00FF00</color>
     <color name="colorGray1">#00FF00</color>
     <color name="colorGray">#CCCCCC</color>
     <color name="colorRed">#E30508</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorSplitLine">#CCCCCC</color>
+
+    <color name="colorRecyclerTitleBg">@android:color/white</color>
+    <color name="colorRecyclerTitleText">#000000</color>
+
+    <color name="colorIndexBarText">#000000</color>
+    <color name="colorIndexBarHintText">#000000</color>
+    <color name="colorIndexBarChooseText">#00FF00</color>
+    <color name="colorIndexBarPressBg">#E30508</color>
 </resources>

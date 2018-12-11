@@ -1,6 +1,7 @@
 package com.rebtel.android.view;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -82,25 +83,33 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     //just for improve the performance, cpu is 1% lower than do it directly in mainThread
     private static class LoadImageAsyncTask extends AsyncTask<Void, Void, Void> {
 
+        private static String mPackageName = null;
+        private static Resources mResources = null;
         private ItemRecyclerDisplayData mCurrentData;
         private RecyclerHolder mHolder;
-        private Context mCtx = null;
-        private String country = null;
-        private int flagId = 0;
+        private String mCountry = null;
+        private int mFlagId = 0;
 
         public LoadImageAsyncTask(Context ctx, ItemRecyclerDisplayData currentData, RecyclerHolder holder) {
             this.mCurrentData = currentData;
             this.mHolder = holder;
-            this.mCtx = ctx;
+
+            if (mPackageName == null) {
+                mPackageName = ctx.getPackageName();
+            }
+            if (mResources == null) {
+                mResources = ctx.getResources();
+            }
         }
 
         @Override
         protected Void doInBackground(Void... params) {
 
-            String flag = ("ic_flag_" + mCurrentData.getCountryFlag().toLowerCase());
-            flagId = mCtx.getResources().getIdentifier(flag, "drawable", mCtx.getPackageName());
+            String flag = ("ic_flag_" + mCurrentData.getAlpha2Code().toLowerCase());
+            mFlagId = mResources.getIdentifier(flag, "drawable", mPackageName);
 
-            country = mCurrentData.getCountryName() + " (+" + mCurrentData.getCallCode() + ")";
+            mCountry = mCurrentData.getName() + " (+" + mCurrentData.getCallCode() + ")";
+
             return null;
         }
 
@@ -108,8 +117,8 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
 
-            mHolder.mIvFlag.setImageResource(flagId);
-            mHolder.mTvName.setText(country);
+            mHolder.mIvFlag.setImageResource(mFlagId);
+            mHolder.mTvName.setText(mCountry);
         }
     }
 }
