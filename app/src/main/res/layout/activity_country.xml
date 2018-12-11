@@ -16,19 +16,35 @@
 
     <com.rebtel.android.view.IndexBarView
         android:id="@+id/index_bar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginTop="@dimen/index_bar_margin"
+        android:layout_marginEnd="@dimen/index_bar_margin"
+        android:layout_marginBottom="@dimen/index_bar_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/guideline_h_index"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/index_bar_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="F"
+        android:background="@color/colorGreen"
         android:textSize="@dimen/index_bar_hint_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.62"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_h_index"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
 </android.support.constraint.ConstraintLayout>

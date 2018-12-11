@@ -17,5 +17,6 @@
 
     <dimen name="index_bar_text_size">16sp</dimen>
     <dimen name="index_bar_hint_text_size">32sp</dimen>
+    <dimen name="index_bar_margin">8dp</dimen>
 
 </resources>
