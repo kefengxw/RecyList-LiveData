@@ -1,7 +1,6 @@
 package com.rebtel.android.model.local;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Query;
 import android.os.AsyncTask;
 
 import com.rebtel.android.model.repository.DisplayData;
@@ -11,11 +10,9 @@ import java.util.List;
 public class LocalDataRepository {
     //this is just for expansion from architecture aspect
     private LocalDataDao mLocalDataDao = null;
-    //private LiveData<LocalData> mFavorLocation = null;
 
     public LocalDataRepository(LocalDataDao local) {
         this.mLocalDataDao = local;
-        //this.mFavorLocation = mLocalDataDao.getFavorLocationLd();
     }
 
     public void insert(LocalBean it) {
@@ -30,15 +27,15 @@ public class LocalDataRepository {
     }
 
     private static class InsertLocationAsyncTask extends AsyncTask<LocalBean, Void, Void> {
-        private LocalDataDao localDataDao;
+        private LocalDataDao mDao;
 
         public InsertLocationAsyncTask(LocalDataDao it) {
-            this.localDataDao = it;
+            this.mDao = it;
         }
 
         @Override
         protected Void doInBackground(LocalBean... fLos) {
-            localDataDao.insert(fLos[0]);
+            mDao.insert(fLos[0]);
             return null;
         }
     }

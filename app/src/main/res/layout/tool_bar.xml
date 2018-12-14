@@ -6,10 +6,9 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:elevation="@dimen/tool_bar_shadow"
-    app:title="@string/country_activity_title"
     android:fitsSystemWindows="true"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    >
+    app:title="@string/country_activity_title">
     <!--android:layout_height="wrap_content"-->
 </android.support.v7.widget.Toolbar>

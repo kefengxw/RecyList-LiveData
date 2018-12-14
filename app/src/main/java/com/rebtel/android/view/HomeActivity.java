@@ -76,7 +76,6 @@ public class HomeActivity extends AppCompatActivity {
     private View.OnClickListener imageFlagListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //Toast.makeText(ctx, "imageFlagListener", Toast.LENGTH_SHORT).show();
             CountryActivity.start(HomeActivity.this, mCtx);
         }
     };
@@ -117,6 +116,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private int converter2FlagId(String flagId) {
+
         String flag = (IC_FLAG_FILE + flagId.toLowerCase());
         return mCtx.getResources().getIdentifier(flag, IC_FLAG_FOLDER, mCtx.getPackageName());
     }
@@ -147,6 +147,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getUserData() {
+
         SharedPreferences setting = getSharedPreferences(HOME_SETTING, 0);
         mFlagCode = setting.getString(FLAG_ID, DEFAULT_FLAG);
         mCallCode = setting.getString(CALL_ID, DEFAULT_CALL_CODE);

@@ -28,10 +28,8 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     private static Resources mResources = null;
     private ArrayList<ItemRecyclerDisplayData> mData = new ArrayList<>();
     private OnItemClickListener mListener = null;
-    private Context mCtx = null;
 
     public RecyclerAdapter(Context ctx) {
-        this.mCtx = ctx;
 
         if (mPackageName == null) {
             mPackageName = ctx.getPackageName();
@@ -89,6 +87,7 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     }
 
     class RecyclerHolder extends RecyclerView.ViewHolder {//can be static class if outside want to use it
+
         private ImageView mIvFlag = null;
         private TextView mTvName = null;
 

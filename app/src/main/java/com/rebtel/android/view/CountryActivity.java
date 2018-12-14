@@ -19,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rebtel.android.R;
 import com.rebtel.android.Util.UtilBundle;
@@ -37,11 +36,11 @@ public class CountryActivity extends AppCompatActivity {
 
     private ArrayList<ItemRecyclerDisplayData> mItemList = new ArrayList<>();
     private RecyListDataViewModel mViewModel = null;
-    private RecyclerAdapter adapter = null;
+    private RecyclerAdapter mAdapter = null;
     private RecyclerView mRecyclerView = null;
-    private TitleDecoration title = null;
-    private TextView mIndexBarText = null;
     private IndexBarView mIndexBarView = null;
+    private TextView mIndexBarText = null;
+    private TitleDecoration mTitle = null;
     private Context mCtx = null;
 
     public static void start(@NonNull Activity start, Context ctx) {
@@ -82,18 +81,17 @@ public class CountryActivity extends AppCompatActivity {
     }
 
     private void buildRecyclerView() {
-
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
 
-        adapter = new RecyclerAdapter(mCtx);
-        adapter.setItemClickListener(itemListener);
-        mRecyclerView.setAdapter(adapter);
+        mAdapter = new RecyclerAdapter(mCtx);
+        mAdapter.setItemClickListener(itemListener);
+        mRecyclerView.setAdapter(mAdapter);
 
-        title = new TitleDecoration(mCtx);
+        mTitle = new TitleDecoration(mCtx);
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        mRecyclerView.addItemDecoration(title);
+        mRecyclerView.addItemDecoration(mTitle);
     }
 
     private void buildIndexBarView() {
@@ -108,7 +106,7 @@ public class CountryActivity extends AppCompatActivity {
     private IndexBarView.OnTouchEventListener indexListener = new IndexBarView.OnTouchEventListener() {
         @Override
         public void onTouchListener(String it) {
-            int position = adapter.getPositionByIndex(it);
+            int position = mAdapter.getPositionByIndex(it);
             if (-1 != position) {
                 //mRecyclerView.scrollToPosition(position);
                 ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
@@ -125,13 +123,15 @@ public class CountryActivity extends AppCompatActivity {
     };
 
     private void encodeSelectItemToIntent(ItemRecyclerDisplayData data) {
+
         Intent bIntent = new Intent();
         setIntentPara(bIntent, data.getAlpha2Code(), data.getCallCode());
 
         setResult(RESULT_OK, bIntent);
     }
 
-    private static void setIntentPara(Intent intent, String flagId, String callId) {
+    private void setIntentPara(Intent intent, String flagId, String callId) {
+
         Bundle bundle = new Bundle();
         UtilBundle.addDataToBundle(bundle, flagId, callId);
         intent.putExtras(bundle);
@@ -143,15 +143,26 @@ public class CountryActivity extends AppCompatActivity {
             //actually, it only invoked one time, because the data never changed, unless add new country/region
             if ((listResource.mData != null) && (listResource.mData.size() != 0)) {
                 prepareItemListData(listResource.mData);
-                adapter.setData(mItemList);
-                if (title != null) {
-                    title.setData(mItemList);
+                mAdapter.setData(mItemList);
+                if (mTitle != null) {
+                    mTitle.setData(mItemList);
                 }
             }
         }
     };
 
+    private Observer<List<DisplayData>> observerFilterData = new Observer<List<DisplayData>>() {
+        @Override
+        public void onChanged(@Nullable List<DisplayData> listResource) {
+            if (listResource.size() != 0) {
+                prepareItemListData(listResource);
+                mAdapter.setData(mItemList);
+            }
+        }
+    };
+
     private void prepareItemListData(List<DisplayData> it) {
+
         DisplayData tmp = null;
         mItemList.clear();
         for (int i = 0; i < it.size(); i++) {
@@ -159,16 +170,6 @@ public class CountryActivity extends AppCompatActivity {
             mItemList.add(new ItemRecyclerDisplayData(tmp.alpha2Code, tmp.name, tmp.callCode));
         }
     }
-
-    private Observer<List<DisplayData>> observerFilterData = new Observer<List<DisplayData>>() {
-        @Override
-        public void onChanged(@Nullable List<DisplayData> listResource) {
-            if (listResource.size() != 0) {
-                prepareItemListData(listResource);
-                adapter.setData(mItemList);
-            }
-        }
-    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -184,16 +185,15 @@ public class CountryActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(searchListener);
         //searchView.setQueryHint(DEFAULT_SEARCH_VIEW_HINT);
         //searchView.setIconifiedByDefault(false);//Icon always display
-        //searchView.setIconified(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         boolean result = true;//default is true
         switch (item.getItemId()) {
             case android.R.id.home:
-                //Toast.makeText(mCtx, "homeAsUp", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
             default:

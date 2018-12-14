@@ -20,17 +20,16 @@ import java.util.ArrayList;
 public class TitleDecoration extends ItemDecoration {
 
     private ArrayList<ItemRecyclerDisplayData> mData = null;
+    private Paint mPaint = null;
+    private Rect mBounds = null;
     private int mTitleHeight = 0;
     private int mBgColor = 0;
     private int mTextColor = 0;
     private int mTitleFontSize = 0;
-    private Paint mPaint = null;
-    private Rect mBounds = null;
 
     public TitleDecoration(Context ctx) {
 
         Resources res = ctx.getResources();
-
         mPaint = new Paint();
         mBounds = new Rect();
         mBgColor = ContextCompat.getColor(ctx, R.color.colorRecyclerTitleBg);

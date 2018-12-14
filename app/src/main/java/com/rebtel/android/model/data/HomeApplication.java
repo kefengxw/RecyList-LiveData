@@ -18,7 +18,6 @@ public class HomeApplication extends Application {
     private static RemoteDataInfoService mInstanceService = null;
     private static DataRepository mInstanceRepos = null;
     private static LocalDataRepository mInstanceReposDb = null;
-    //private static RemoteDataInfoRepository mInstanceReposSer = null;
     private static AppExecutors mAppExecutors = null;
 
     @Override
@@ -40,7 +39,6 @@ public class HomeApplication extends Application {
         //DataRepository
         mInstanceRepos = DataRepositoryFactory.getInstanceRepo();
         mInstanceReposDb = LocalDataRepositoryFactory.getInstanceRepoDb();
-        //mInstanceReposSer = RemoteDataInfoRepositoryFactory.getInstanceRepoSer();
         //other, debug, log,
         //Timber here;
     }
@@ -72,10 +70,6 @@ public class HomeApplication extends Application {
     public static LocalDataRepository getInstanceReposDb() {
         return mInstanceReposDb;
     }
-
-//    public static RemoteDataInfoRepository getInstanceReposSer() {
-//        return mInstanceReposSer;
-//    }
 
     @Override
     public void onLowMemory() {

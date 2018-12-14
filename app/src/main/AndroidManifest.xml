@@ -21,8 +21,7 @@
         </activity>
         <activity
             android:name=".view.CountryActivity"
-            android:theme="@style/ToolBarTheme">
-        </activity>
+            android:theme="@style/ToolBarTheme"></activity>
     </application>
 
 </manifest>

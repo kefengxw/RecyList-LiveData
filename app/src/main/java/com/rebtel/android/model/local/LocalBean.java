@@ -38,12 +38,4 @@ public class LocalBean {
         this.callCode = callCode;
         this.nativeName = nativeName;
     }
-/*
-    public LocalBean(LocalData it) {
-        //this.id = 0;
-        this.name = it.name;
-        this.alpha2Code = it.alpha2Code;
-        this.callCode = it.callCode;
-        this.nativeName = it.nativeName;
-    }*/
 }

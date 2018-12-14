@@ -19,14 +19,11 @@ public class DataRepository {
     private AppExecutors mAppExecutors = null;
     private LocalDataDao mLocalDataDao = null;
     private RemoteDataInfoService mRemoteDataInfoService = null;
-    //private LiveData<LocalData> mFavorLocation = null;
-    //private LiveData<Resource<DisplayDataInfo>> mResultWeatherInfo = null;
 
     public DataRepository(LocalDataDao local, RemoteDataInfoService remote, AppExecutors appExecutors) {
         this.mLocalDataDao = local;
         this.mRemoteDataInfoService = remote;
         this.mAppExecutors = appExecutors;
-        //this.mFavorLocation = mLocalDataDao.getFavorLocationLd();
     }
 
     public LiveData<Resource<List<DisplayData>>> getAllDisplayData() {

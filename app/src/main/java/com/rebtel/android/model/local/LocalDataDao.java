@@ -13,12 +13,8 @@ import java.util.List;
 @Dao
 public interface LocalDataDao {
 
-   @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(LocalBean it);
-
-    //just because return LocalData, while not LocalBean, see @ColumnInfo in LocalData
-/*     @Query("SELECT latitude, longitude FROM FavorLocalBean LIMIT 1")
-    LiveData<LocalData> getFavorLocationLd();*/
 
     @Query("SELECT * FROM local_table ORDER BY name ASC")
     LiveData<List<DisplayData>> getAllDataFromDb();
