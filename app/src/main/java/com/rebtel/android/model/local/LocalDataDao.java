@@ -22,4 +22,7 @@ public interface LocalDataDao {
 
     @Query("SELECT * FROM local_table ORDER BY name ASC")
     LiveData<List<DisplayData>> getAllDataFromDb();
+
+    @Query("SELECT * FROM local_table WHERE lower(name) LIKE :input ORDER BY name ASC")
+    LiveData<List<DisplayData>> getDataFromDbByName(String input);
 }

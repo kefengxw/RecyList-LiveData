@@ -5,4 +5,8 @@
 
     <string name="item_country_name">China (+86)</string>
 
+    <string name="item_search_view_hint">Search</string>
+
+    <string name="country_activity_title">Pick a country/region</string>
+
 </resources>

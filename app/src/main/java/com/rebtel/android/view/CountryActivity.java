@@ -12,9 +12,17 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rebtel.android.R;
+import com.rebtel.android.Util.UtilBundle;
 import com.rebtel.android.model.remote.Resource;
 import com.rebtel.android.model.repository.DisplayData;
 import com.rebtel.android.viewmodel.RecyListDataViewModel;
@@ -23,8 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.View.INVISIBLE;
-import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_CALL_ID;
-import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_FLAG_ID;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
 
 public class CountryActivity extends AppCompatActivity {
@@ -60,11 +66,19 @@ public class CountryActivity extends AppCompatActivity {
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(CountryActivity.this).get(RecyListDataViewModel.class);
         mViewModel.getLiveDataAllDisplayData().observe(this, observerAllData);
+        mViewModel.getDataByFilter().observe(this, observerFilterData);
     }
 
     private void initView() {
+        buildToolBarView();
         buildRecyclerView();
         buildIndexBarView();
+    }
+
+    private void buildToolBarView() {
+        Toolbar toolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void buildRecyclerView() {
@@ -95,9 +109,9 @@ public class CountryActivity extends AppCompatActivity {
         @Override
         public void onTouchListener(String it) {
             int position = adapter.getPositionByIndex(it);
-            if (-1 != position){
+            if (-1 != position) {
                 //mRecyclerView.scrollToPosition(position);
-                ((LinearLayoutManager)mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
+                ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
             }
         }
     };
@@ -119,14 +133,14 @@ public class CountryActivity extends AppCompatActivity {
 
     private static void setIntentPara(Intent intent, String flagId, String callId) {
         Bundle bundle = new Bundle();
-        bundle.putString(INTENT_FLAG_ID, flagId);
-        bundle.putString(INTENT_CALL_ID, callId);
+        UtilBundle.addDataToBundle(bundle, flagId, callId);
         intent.putExtras(bundle);
     }
 
     private Observer<Resource<List<DisplayData>>> observerAllData = new Observer<Resource<List<DisplayData>>>() {
         @Override
         public void onChanged(@Nullable Resource<List<DisplayData>> listResource) {
+            //actually, it only invoked one time, because the data never changed, unless add new country/region
             if ((listResource.mData != null) && (listResource.mData.size() != 0)) {
                 prepareItemListData(listResource.mData);
                 adapter.setData(mItemList);
@@ -139,9 +153,66 @@ public class CountryActivity extends AppCompatActivity {
 
     private void prepareItemListData(List<DisplayData> it) {
         DisplayData tmp = null;
+        mItemList.clear();
         for (int i = 0; i < it.size(); i++) {
             tmp = it.get(i);
             mItemList.add(new ItemRecyclerDisplayData(tmp.alpha2Code, tmp.name, tmp.callCode));
         }
     }
+
+    private Observer<List<DisplayData>> observerFilterData = new Observer<List<DisplayData>>() {
+        @Override
+        public void onChanged(@Nullable List<DisplayData> listResource) {
+            if (listResource.size() != 0) {
+                prepareItemListData(listResource);
+                adapter.setData(mItemList);
+            }
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) (searchItem.getActionView());
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(searchListener);
+        //searchView.setQueryHint(DEFAULT_SEARCH_VIEW_HINT);
+        //searchView.setIconifiedByDefault(false);//Icon always display
+        //searchView.setIconified(true);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean result = true;//default is true
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Toast.makeText(mCtx, "homeAsUp", Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            default:
+                result = super.onOptionsItemSelected(item);
+        }
+        return result;
+    }
+
+    private SearchView.OnQueryTextListener searchListener = new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String s) {
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String s) {
+            //Toast.makeText(mCtx, "Start to Search " + s, Toast.LENGTH_SHORT).show();
+            mViewModel.setFilter(s);
+            return false;
+        }
+    };
 }

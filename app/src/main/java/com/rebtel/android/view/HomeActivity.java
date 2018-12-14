@@ -2,6 +2,7 @@ package com.rebtel.android.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.rebtel.android.R;
+import com.rebtel.android.Util.UtilBundle;
 
 import static com.rebtel.android.model.data.ExternalDataConfiguration.DEFAULT_CALL_CODE;
 import static com.rebtel.android.model.data.ExternalDataConfiguration.DEFAULT_FLAG;
@@ -24,8 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     private EditText mTextTelNum = null;
     private ImageView mImageFlag = null;
     private Button mButtonCall = null;
-    private int mFlagId = 0;
-    private String mCallId = null;
+    private String mFlagCode = null;
+    private String mCallCode = null;
     private Context mCtx = null;
 
     @Override
@@ -36,6 +38,12 @@ public class HomeActivity extends AppCompatActivity {
         setContext();
         initView();
         initContent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateView();
     }
 
     private void setContext() {
@@ -53,10 +61,10 @@ public class HomeActivity extends AppCompatActivity {
         mImageFlag.setOnClickListener(imageFlagListener);
     }
 
-    private void initContent(){
-        mFlagId = DEFAULT_FLAG;
-        mCallId = DEFAULT_CALL_CODE;
-        updateView();//only once
+    private void initContent() {
+        mFlagCode = DEFAULT_FLAG;
+        mCallCode = DEFAULT_CALL_CODE;
+        //better to want to save data
     }
 
     private View.OnClickListener buttonCallListener = new View.OnClickListener() {
@@ -83,31 +91,56 @@ public class HomeActivity extends AppCompatActivity {
     private void decodeSelectItemFromIntent(int requestCode, int resultCode, Intent intent) {
         if ((requestCode == INTENT_RQ_CODE) && (resultCode == RESULT_OK)) {
             getIntentPara(intent);
-            updateView();
         }
     }
 
     private void getIntentPara(Intent intent) {
         //Intent intent = getIntent();
-        String flagIdtmp = null;
-        String callIdtmp = null;
         Bundle bundle = intent.getExtras();
         if (null != bundle) {
-            flagIdtmp = bundle.getString(INTENT_FLAG_ID);
-            callIdtmp = bundle.getString(INTENT_CALL_ID);
+            getIdDataFromBundle(bundle);
         }
-        converter2ResIdAndCallCode(flagIdtmp, callIdtmp);
     }
 
-    private void converter2ResIdAndCallCode(String flagId, String callId){
-        String flag = ("ic_flag_" + flagId.toLowerCase());
-        mFlagId = mCtx.getResources().getIdentifier(flag, "drawable", mCtx.getPackageName());
-        mCallId = "+" + callId;
+    private void getIdDataFromBundle(Bundle bundle) {
+        mFlagCode = UtilBundle.getFlagIdDataFromBundle(bundle);
+        mCallCode = UtilBundle.getCallIdDataFromBundle(bundle);
     }
 
     private void updateView() {
-        mImageFlag.setImageResource(mFlagId);
-        mTextTelNum.setText(mCallId);
-        mTextTelNum.setSelection(mCallId.length());
+
+        int flagId = converter2FlagId(mFlagCode);
+        String callId = converter2CallId(mCallCode);
+
+        mImageFlag.setImageResource(flagId);
+        mTextTelNum.setText(callId);
+        mTextTelNum.setSelection(callId.length());
+    }
+
+    private int converter2FlagId(String flagId) {
+        String flag = ("ic_flag_" + flagId.toLowerCase());
+        return mCtx.getResources().getIdentifier(flag, "drawable", mCtx.getPackageName());
+    }
+
+    private String converter2CallId(String callId) {
+        return ("+" + callId);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        UtilBundle.addDataToBundle(outState, mFlagCode, mCallCode);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        getIdDataFromBundle(savedInstanceState);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //if configChange is set, than on configuration chang will be run.
     }
 }

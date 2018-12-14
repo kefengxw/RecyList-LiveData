@@ -1,5 +1,6 @@
 package com.rebtel.android.view;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -16,13 +17,15 @@ import com.rebtel.android.R;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.rebtel.android.model.data.InternalDataConfiguration.INDEX_BAR_LETTER_SPLIT;
+
 public class IndexBarView extends View {
 
     private OnTouchEventListener mListener = null;
     private Resources mResources = null;
     private List<String> mLetters = null;
     private TextView mHintTextView = null;
-    private int mLetterSize = 0;
+    private float mLetterSize = 0;
     //private int mHintTextSize = 0;
     private int mLetterColor = 0;
     //private int mHintTextColor = 0;
@@ -59,19 +62,24 @@ public class IndexBarView extends View {
         mResources = ctx.getResources();
         mLetters = Arrays.asList(mResources.getStringArray(R.array.indexBarLetter));
 
-        mLetterSize = mResources.getDimensionPixelSize(R.dimen.index_bar_text_size);
+        //mLetterSize = mResources.getDimensionPixelSize(R.dimen.index_bar_text_size);
         //mHintTextSize = mResources.getDimensionPixelSize(R.dimen.index_bar_hint_text_size);
 
         mLetterColor = ContextCompat.getColor(ctx, R.color.colorIndexBarText);
         //mHintTextColor = ContextCompat.getColor(ctx, R.color.colorIndexBarHintText);
-        mChooseTextColor = ContextCompat.getColor(ctx, R.color.colorIndexBarChooseText);
+        //mChooseTextColor = ContextCompat.getColor(ctx, R.color.colorIndexBarChooseText);
         //mPressBgColor = ContextCompat.getColor(ctx, R.color.colorIndexBarPressBg);
 
-        if (attrs != null) {
-            TypedArray it = ctx.obtainStyledAttributes(attrs, R.styleable.IndexBarView);
-            //it.getColor(R.styleable.IndexBarView_index_bar_text_color, )
-            it.recycle();
-        }
+//        if (attrs != null) {
+//            TypedArray it = ctx.obtainStyledAttributes(attrs, R.styleable.IndexBarView);
+//            //it.getColor(R.styleable.IndexBarView_index_bar_text_color, )
+
+/*        TypedValue tv = new TypedValue();
+        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+        }*/
+//            it.recycle();
+//        }
 
         //mTextPaint.setAntiAlias(true);
         //mTextPaint.setColor();
@@ -82,6 +90,12 @@ public class IndexBarView extends View {
         mHeight = getHeight();
         mWidth = getWidth();
         mLetterHeight = mHeight / mLetters.size();//maybe add some padding here
+
+        mLetterSize = mLetterHeight * INDEX_BAR_LETTER_SPLIT;
+
+//        if (mLetterSize > mLetterHeight) {
+//            mLetterSize = mLetterHeight;//fix index bar display half problem when soft input comes
+//        }
     }
 
     @Override
@@ -90,7 +104,7 @@ public class IndexBarView extends View {
         updateViewParam();
         //1. draw Letter
         drawLetter(canvas);
-        drawChooseText(canvas);
+        //drawChooseText(canvas);
     }
 
     private void drawLetter(Canvas canvas) {
@@ -101,18 +115,18 @@ public class IndexBarView extends View {
         setLetterPaint(mLetterPaint);
 
         for (int i = 0; i < mLetters.size(); i++) {
-            if (i == mChoosePosition) {
-                setLetterPaintForChoosePosition(mLetterPaint);
-            }
+//            if (i == mChoosePosition) {
+//                //setLetterPaintForChoosePosition(mLetterPaint);
+//            }
 
             cur = mLetters.get(i);
             x = (mWidth - mLetterPaint.measureText(cur)) / 2;
             y = mLetterHeight * (i + 1);
             canvas.drawText(cur, x, y, mLetterPaint);
 
-            if (i == mChoosePosition) {
-                setLetterPaint(mLetterPaint);
-            }//recover the paint
+//            if (i == mChoosePosition) {
+//                //setLetterPaint(mLetterPaint);
+//            }//recover the paint
         }
     }
 
@@ -120,19 +134,19 @@ public class IndexBarView extends View {
         letterPaint.setColor(mLetterColor);
         letterPaint.setTextSize(mLetterSize);
         //mLetterPaint.setTypeface();//Letter Type
+        //letterPaint.setFakeBoldText(false);
         letterPaint.setAntiAlias(true);
-        letterPaint.setFakeBoldText(false);
     }
-
-    private void setLetterPaintForChoosePosition(Paint letterPaint) {
-        letterPaint.setColor(mChooseTextColor);
-        letterPaint.setFakeBoldText(true);
-    }
-
-
-    private void drawChooseText(Canvas canvas) {
-
-    }
+//
+//    private void setLetterPaintForChoosePosition(Paint letterPaint) {
+//        letterPaint.setColor(mChooseTextColor);
+//        //letterPaint.setFakeBoldText(true);
+//    }
+//
+//
+//    private void drawChooseText(Canvas canvas) {
+//
+//    }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -161,26 +175,29 @@ public class IndexBarView extends View {
 
     private void handleTouchEventActionUp() {
         mHintTextView.setVisibility(INVISIBLE);
+        //this.setVisibility(INVISIBLE);
         mChoosePosition = -1;
     }
 
     private void handleTouchEventActionMove() {
         mHintTextView.setVisibility(VISIBLE);
+        //this.setVisibility(VISIBLE);
+
         if ((mChoosePosition != mOldChoosePosition) && (mChoosePosition >= 0) && (mChoosePosition < mLetters.size())) {
             String cur = mLetters.get(mChoosePosition);
             mHintTextView.setText(cur);
-            if (mListener != null){
+            if (mListener != null) {
                 mListener.onTouchListener(cur);
             }
         }
         mOldChoosePosition = mChoosePosition;
     }
 
-    public interface OnTouchEventListener{
+    public interface OnTouchEventListener {
         public void onTouchListener(String it);
     }
 
-    public void setOnTouchEventListener(OnTouchEventListener it){
+    public void setOnTouchEventListener(OnTouchEventListener it) {
         mListener = it;
     }
 }
