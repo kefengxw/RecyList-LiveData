@@ -1,7 +1,9 @@
 <resources>
-    <dimen name="text_tel_number_text_size">32sp</dimen>
+    <dimen name="text_tel_number_text_size">28sp</dimen>
     <dimen name="text_tel_number_left_right_margin">16dp</dimen>
     <dimen name="text_tel_number_top_button_margin">8dp</dimen>
+
+    <dimen name="image_top_margin">8dp</dimen>
 
     <dimen name="recycler_view_left_right_margin">32dp</dimen>
     <dimen name="item_text_country_text_size">18sp</dimen>
