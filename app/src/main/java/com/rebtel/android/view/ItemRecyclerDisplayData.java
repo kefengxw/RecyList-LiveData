@@ -5,8 +5,8 @@ public class ItemRecyclerDisplayData {
     private String mAlpha2Code;//for flag,alpha2Code
     private String mName;//for Name
     private String mCallCode;//for Callcode
-    private int mFlagId;//improve performance
-    private int mCallId;//improve performance
+    private int mFlagId = 0;//improve performance
+    private String mCallId = null;//improve performance
 
     public ItemRecyclerDisplayData(String alpha2Code, String name, String callCode) {
         this.mAlpha2Code = alpha2Code;
@@ -36,5 +36,21 @@ public class ItemRecyclerDisplayData {
 
     public void setCallCode(String callCode) {
         this.mCallCode = callCode;
+    }
+
+    public int getFlagId() {
+        return mFlagId;
+    }
+
+    public void setFlagId(int flagId) {
+        this.mFlagId = flagId;
+    }
+
+    public String getCallId() {
+        return mCallId;
+    }
+
+    public void setCallId(String callId) {
+        this.mCallId = callId;
     }
 }

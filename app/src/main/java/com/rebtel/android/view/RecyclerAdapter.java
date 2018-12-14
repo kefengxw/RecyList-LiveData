@@ -17,14 +17,28 @@ import com.rebtel.android.Util.UtilString;
 
 import java.util.ArrayList;
 
+import static com.rebtel.android.model.data.InternalDataConfiguration.CALL_CODE_LEFT;
+import static com.rebtel.android.model.data.InternalDataConfiguration.CALL_CODE_RIGHT;
+import static com.rebtel.android.model.data.InternalDataConfiguration.IC_FLAG_FILE;
+import static com.rebtel.android.model.data.InternalDataConfiguration.IC_FLAG_FOLDER;
+
 public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
 
+    private static String mPackageName = null;
+    private static Resources mResources = null;
     private ArrayList<ItemRecyclerDisplayData> mData = new ArrayList<>();
     private OnItemClickListener mListener = null;
     private Context mCtx = null;
 
     public RecyclerAdapter(Context ctx) {
         this.mCtx = ctx;
+
+        if (mPackageName == null) {
+            mPackageName = ctx.getPackageName();
+        }
+        if (mResources == null) {
+            mResources = ctx.getResources();
+        }
     }
 
     public void setData(ArrayList<ItemRecyclerDisplayData> data) {
@@ -42,7 +56,23 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerHolder holder, int iPosition) {
         ItemRecyclerDisplayData currentData = mData.get(iPosition);
-        new LoadImageAsyncTask(mCtx, currentData, holder).execute();
+        //after testing, it is better to update directly in one thread
+        //new LoadImageAsyncTask(mCtx, currentData, holder).execute();
+        int flagId = currentData.getFlagId();
+        if (0 == flagId) {
+            String flag = (IC_FLAG_FILE + currentData.getAlpha2Code().toLowerCase());
+            flagId = mResources.getIdentifier(flag, IC_FLAG_FOLDER, mPackageName);
+            currentData.setFlagId(flagId);
+        }
+
+        String country = currentData.getCallId();
+        if (null == country) {
+            country = currentData.getName() + CALL_CODE_LEFT + currentData.getCallCode() + CALL_CODE_RIGHT;
+            currentData.setCallId(country);
+        }
+
+        holder.mIvFlag.setImageResource(flagId);
+        holder.mTvName.setText(country);
     }
 
     @Override
@@ -81,48 +111,6 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
         };
     }
 
-    //just for improve the performance, cpu is 1% lower than do it directly in mainThread
-    private static class LoadImageAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private static String mPackageName = null;
-        private static Resources mResources = null;
-        private ItemRecyclerDisplayData mCurrentData;
-        private RecyclerHolder mHolder;
-        private String mCountry = null;
-        private int mFlagId = 0;
-
-        public LoadImageAsyncTask(Context ctx, ItemRecyclerDisplayData currentData, RecyclerHolder holder) {
-            this.mCurrentData = currentData;
-            this.mHolder = holder;
-
-            if (mPackageName == null) {
-                mPackageName = ctx.getPackageName();
-            }
-            if (mResources == null) {
-                mResources = ctx.getResources();
-            }
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            String flag = ("ic_flag_" + mCurrentData.getAlpha2Code().toLowerCase());
-            mFlagId = mResources.getIdentifier(flag, "drawable", mPackageName);
-
-            mCountry = mCurrentData.getName() + " (+" + mCurrentData.getCallCode() + ")";
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            mHolder.mIvFlag.setImageResource(mFlagId);
-            mHolder.mTvName.setText(mCountry);
-        }
-    }
-
     public int getPositionByIndex(String it) {
         if ((mData == null) || ('A' > it.charAt(0)) || (it.charAt(0) > 'Z')) {
             return -1;
@@ -136,4 +124,46 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
 
         return -1;
     }
+
+//    //just for improve the performance, cpu is 1% lower than do it directly in mainThread, but load is slower
+//    private static class LoadImageAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//        private static String mPackageName = null;
+//        private static Resources mResources = null;
+//        private ItemRecyclerDisplayData mCurrentData;
+//        private RecyclerHolder mHolder;
+//        private String mCountry = null;
+//        private int mFlagId = 0;
+//
+//        public LoadImageAsyncTask(Context ctx, ItemRecyclerDisplayData currentData, RecyclerHolder holder) {
+//            this.mCurrentData = currentData;
+//            this.mHolder = holder;
+//
+//            if (mPackageName == null) {
+//                mPackageName = ctx.getPackageName();
+//            }
+//            if (mResources == null) {
+//                mResources = ctx.getResources();
+//            }
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... params) {
+//
+//            String flag = ("ic_flag_" + mCurrentData.getAlpha2Code().toLowerCase());
+//            mFlagId = mResources.getIdentifier(flag, "drawable", mPackageName);
+//
+//            mCountry = mCurrentData.getName() + " (+" + mCurrentData.getCallCode() + ")";
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void aVoid) {
+//            super.onPostExecute(aVoid);
+//
+//            mHolder.mIvFlag.setImageResource(mFlagId);
+//            mHolder.mTvName.setText(mCountry);
+//        }
+//    }
 }
