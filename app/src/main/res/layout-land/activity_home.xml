@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.HomeActivity">
+    <!--android:focusable="true"-->
+    <!--android:focusableInTouchMode="true"-->
+
+    <ImageView
+        android:id="@+id/flag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/image_top_margin"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/text_tel_number"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_h"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.08" />
+
+    <EditText
+        android:id="@+id/text_tel_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/text_tel_number_left_right_margin"
+        android:layout_marginTop="@dimen/text_tel_number_top_button_margin"
+        android:layout_marginEnd="@dimen/text_tel_number_left_right_margin"
+        android:layout_marginBottom="@dimen/text_tel_number_top_button_margin"
+        android:autofillHints="@string/telephone_hint"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="phone"
+        android:text="@string/telephone"
+        android:textSize="@dimen/text_tel_number_text_size"
+        android:theme="@style/EditText"
+        app:layout_constraintBottom_toTopOf="@+id/button_call"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flag" />
+    <!--android:textCursorDrawable-->
+
+    <Button
+        android:id="@+id/button_call"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_call_button"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_v"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_tel_number"
+        app:layout_constraintWidth_percent="0.10" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.618" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_h"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.20" />
+
+</android.support.constraint.ConstraintLayout>
