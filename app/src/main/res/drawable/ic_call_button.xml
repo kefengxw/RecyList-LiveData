@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/ic_call_buttion_bg"></item>
+    <item android:drawable="@drawable/ic_call_button_bg" />
 
     <item
         android:bottom="8dp"
         android:drawable="@drawable/ic_call_button_icon"
         android:left="8dp"
         android:right="8dp"
-        android:top="8dp"></item>
+        android:top="8dp" />
 
 </layer-list>

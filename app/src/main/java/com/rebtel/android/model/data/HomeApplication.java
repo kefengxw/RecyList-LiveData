@@ -48,7 +48,7 @@ public class HomeApplication extends Application {
     }
 
     public static HomeApplication getInstanceApp() {
-        return (HomeApplication) mInstanceApp;
+        return mInstanceApp;
     }
 
     public static AppExecutors getInstanceEx() {

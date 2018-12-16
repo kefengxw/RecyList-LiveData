@@ -19,7 +19,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     @MainThread
     public NetworkBoundResource(AppExecutors appExecutors) {
         this.mAppExecutors = appExecutors;
-        mResult.setValue((Resource<ResultType>) Resource.loading(null));
+        mResult.setValue(Resource.loading(null));
         final LiveData<ResultType> dbSource = loadFromDb();
         mResult.addSource(dbSource, data -> {
             mResult.removeSource(dbSource);

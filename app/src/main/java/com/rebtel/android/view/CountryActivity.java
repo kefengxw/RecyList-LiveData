@@ -44,9 +44,9 @@ public class CountryActivity extends AppCompatActivity {
     private RecyclerAdapter mAdapter = null;
     private RecyclerView mRecyclerView = null;
     private IndexBarView mIndexBarView = null;
+    private TextView mIndexBarText = null;
     private TextView mLoadFailedView = null;
     private Group mLoadingGroup = null;
-    private TextView mIndexBarText = null;
     private TitleDecoration mTitle = null;
     private Context mCtx = null;
 
