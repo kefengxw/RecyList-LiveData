@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.Group;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -31,6 +33,9 @@ import java.util.List;
 
 import static android.view.View.INVISIBLE;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
+import static com.rebtel.android.model.remote.Resource.Status.ERROR;
+import static com.rebtel.android.model.remote.Resource.Status.LOADING;
+import static com.rebtel.android.model.remote.Resource.Status.SUCCESS;
 
 public class CountryActivity extends AppCompatActivity {
 
@@ -39,6 +44,8 @@ public class CountryActivity extends AppCompatActivity {
     private RecyclerAdapter mAdapter = null;
     private RecyclerView mRecyclerView = null;
     private IndexBarView mIndexBarView = null;
+    private TextView mLoadFailedView = null;
+    private Group mLoadingGroup = null;
     private TextView mIndexBarText = null;
     private TitleDecoration mTitle = null;
     private Context mCtx = null;
@@ -72,6 +79,7 @@ public class CountryActivity extends AppCompatActivity {
         buildToolBarView();
         buildRecyclerView();
         buildIndexBarView();
+        buildLoadingView();
     }
 
     private void buildToolBarView() {
@@ -103,11 +111,17 @@ public class CountryActivity extends AppCompatActivity {
         mIndexBarView.setOnTouchEventListener(indexListener);
     }
 
+    private void buildLoadingView() {
+        mLoadFailedView = findViewById(R.id.load_failInfo);
+        mLoadingGroup = findViewById(R.id.group_loading);
+    }
+
     private IndexBarView.OnTouchEventListener indexListener = new IndexBarView.OnTouchEventListener() {
         @Override
         public void onTouchListener(String it) {
+
             int position = mAdapter.getPositionByIndex(it);
-            if (-1 != position) {
+            if (RecyclerView.NO_POSITION != position) {
                 //mRecyclerView.scrollToPosition(position);
                 ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
             }
@@ -141,15 +155,30 @@ public class CountryActivity extends AppCompatActivity {
         @Override
         public void onChanged(@Nullable Resource<List<DisplayData>> listResource) {
             //actually, it only invoked one time, because the data never changed, unless add new country/region
-            if ((listResource.mData != null) && (listResource.mData.size() != 0)) {
-                prepareItemListData(listResource.mData);
-                mAdapter.setData(mItemList);
-                if (mTitle != null) {
-                    mTitle.setData(mItemList);
-                }
+            updateViewStatus(listResource.mStatus);
+            if (listResource.mStatus == SUCCESS) {
+                updateViewData(listResource.mData);
             }
         }
     };
+
+    private void updateViewStatus(Resource.Status status) {
+        mLoadingGroup.setVisibility((status == LOADING) ? View.VISIBLE : View.INVISIBLE);
+        mLoadFailedView.setVisibility((status == ERROR) ? View.VISIBLE : View.INVISIBLE);
+        mRecyclerView.setVisibility((status == SUCCESS) ? View.VISIBLE : View.INVISIBLE);
+        //mIndexBarText is decided by ACTION UP DOWN or MOVE
+        mIndexBarView.setVisibility((status == SUCCESS) ? View.VISIBLE : View.INVISIBLE);
+    }
+
+    private void updateViewData(List<DisplayData> listData) {
+        if ((listData != null) && (listData.size() != 0)) {
+            prepareItemListData(listData);
+            mAdapter.setData(mItemList);
+            if (mTitle != null) {
+                mTitle.setData(mItemList);
+            }
+        }
+    }
 
     private Observer<List<DisplayData>> observerFilterData = new Observer<List<DisplayData>>() {
         @Override

@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {LocalBean.class}, version = 2, exportSchema = false)
+@Database(entities = {LocalBean.class}, version = 1, exportSchema = false)
 //@TypeConverters
 public abstract class LocalDataDb extends RoomDatabase {
 

@@ -112,7 +112,7 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
 
     public int getPositionByIndex(String it) {
         if ((mData == null) || ('A' > it.charAt(0)) || (it.charAt(0) > 'Z')) {
-            return -1;
+            return RecyclerView.NO_POSITION;
         }
 
         for (int i = 0; i < mData.size(); i++) {
@@ -121,7 +121,7 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
             }
         }
 
-        return -1;
+        return RecyclerView.NO_POSITION;
     }
 
 //    //just for improve the performance, cpu is 1% lower than do it directly in mainThread, but load is slower
