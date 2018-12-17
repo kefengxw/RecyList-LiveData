@@ -12,5 +12,5 @@ public class InternalDataConfiguration {
     public static final String CALL_CODE_RIGHT = ")";
     public static final int INTENT_RQ_CODE = 0x01;
     public static final float INDEX_BAR_LETTER_SPLIT = 0.819f;//decide by Golden Section 0.618
-    
+
 }

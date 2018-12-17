@@ -27,7 +27,7 @@ public class LocalDataRepository {
     }
 
     private static class InsertLocationAsyncTask extends AsyncTask<LocalBean, Void, Void> {
-        private LocalDataDao mDao;
+        private final LocalDataDao mDao;
 
         public InsertLocationAsyncTask(LocalDataDao it) {
             this.mDao = it;

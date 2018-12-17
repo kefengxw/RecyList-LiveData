@@ -43,7 +43,7 @@ public class HomeApplication extends Application {
         //Timber here;
     }
 
-    public void setInstanceApp() {
+    private void setInstanceApp() {
         this.mInstanceApp = this;
     }
 

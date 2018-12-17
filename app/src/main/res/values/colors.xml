@@ -5,10 +5,9 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorWindowBackground">@android:color/white</color>
     <color name="colorGreen">#00FF00</color>
-    <color name="colorGray1">#00FF00</color>
     <color name="colorGray">#CCCCCC</color>
-    <color name="colorRed">#E30508</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorRed">#FA0008</color>
 
     <color name="colorRecyclerTitleBg">@android:color/white</color>
     <color name="colorRecyclerTitleText">#000000</color>
@@ -16,8 +15,6 @@
     <color name="colorIndexBarText">#000000</color>
     <color name="colorIndexBarHintText">@android:color/white</color>
     <color name="colorIndexBarHintTextBg">#008577</color>
-    <color name="colorIndexBarChooseText">#00FF00</color>
-    <color name="colorIndexBarPressBg">#CCCCCC</color>
 
     <color name="colorLoadingText">#008577</color>
 </resources>

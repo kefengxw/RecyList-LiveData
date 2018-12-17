@@ -2,7 +2,6 @@ package com.rebtel.android.view;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;

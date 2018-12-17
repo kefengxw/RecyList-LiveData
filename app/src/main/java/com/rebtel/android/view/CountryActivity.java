@@ -183,7 +183,7 @@ public class CountryActivity extends AppCompatActivity {
     private Observer<List<DisplayData>> observerFilterData = new Observer<List<DisplayData>>() {
         @Override
         public void onChanged(@Nullable List<DisplayData> listResource) {
-            if (listResource.size() != 0) {
+            if ((listResource != null) && (listResource.size() != 0)) {
                 prepareItemListData(listResource);
                 mAdapter.setData(mItemList);
             }

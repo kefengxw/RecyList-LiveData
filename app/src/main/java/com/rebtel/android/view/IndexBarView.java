@@ -138,7 +138,7 @@ public class IndexBarView extends View {
     }
 
     public interface OnTouchEventListener {
-        public void onTouchListener(String it);
+        void onTouchListener(String it);
     }
 
     public void setOnTouchEventListener(OnTouchEventListener it) {

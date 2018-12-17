@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = setting.edit();
         editor.putString(FLAG_ID, mFlagCode);
         editor.putString(CALL_ID, mCallCode);
-        editor.commit();
+        editor.commit();//do not use apply() in background
     }
 
     private void getUserData() {

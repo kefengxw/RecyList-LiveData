@@ -23,7 +23,7 @@ public class LiveDataCallAdapter<T> implements CallAdapter<T, LiveData<ApiRespon
 
         LiveData<ApiResponse<T>> it = new LiveData<ApiResponse<T>>() {
             //just to make sure init by only one Thread
-            AtomicBoolean started = new AtomicBoolean(false);
+            final AtomicBoolean started = new AtomicBoolean(false);
 
             @Override
             protected void onActive() {
