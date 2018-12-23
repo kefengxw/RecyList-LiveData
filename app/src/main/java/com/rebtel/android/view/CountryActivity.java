@@ -121,7 +121,7 @@ public class CountryActivity extends AppCompatActivity {
         public void onTouchListener(String it) {
 
             int position = mAdapter.getPositionByIndex(it);
-            if (RecyclerView.NO_POSITION != position) {
+            if (position != RecyclerView.NO_POSITION) {
                 //mRecyclerView.scrollToPosition(position);
                 ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(position, 0);
             }
@@ -130,9 +130,11 @@ public class CountryActivity extends AppCompatActivity {
 
     private RecyclerAdapter.OnItemClickListener itemListener = new RecyclerAdapter.OnItemClickListener() {
         @Override
-        public void onItemClick(ItemRecyclerDisplayData data) {
-            encodeSelectItemToIntent(data);
-            finish();
+        public void onItemClick(int position) {
+            if (position != RecyclerView.NO_POSITION) {
+                encodeSelectItemToIntent(mItemList.get(position));
+                finish();
+            }
         }
     };
 

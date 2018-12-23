@@ -50,8 +50,8 @@ public class TitleDecoration extends ItemDecoration {
         super.getItemOffsets(outRect, item, parent, state);
         //the position is index of mData, this function is for itemViews to draw
         int position = ((RecyclerView.LayoutParams) item.getLayoutParams()).getViewLayoutPosition();
-        if (RecyclerView.NO_POSITION != position) {
-            if ((0 == position) || (!inSameGroup(position))) {
+        if (position != RecyclerView.NO_POSITION) {
+            if ((position == 0) || (!inSameGroup(position))) {
                 outRect.set(0, mTitleHeight, 0, 0);//outRect.set(0,0,0,0) is default
             }
         }
@@ -84,8 +84,8 @@ public class TitleDecoration extends ItemDecoration {
             RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) itemView.getLayoutParams();
             int position = params.getViewLayoutPosition();
 
-            if (RecyclerView.NO_POSITION != position) {
-                if ((0 == position) || (!inSameGroup(position))) { //first one
+            if (position != RecyclerView.NO_POSITION) {
+                if ((position == 0) || (!inSameGroup(position))) { //first one
                     onDrawTitle(c, left, right, itemView, params, position);
                 }
             }

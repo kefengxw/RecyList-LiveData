@@ -15,7 +15,7 @@ public class RetrofitClient {
     private static volatile Retrofit mInstanceRc = null;
 
     public static synchronized Retrofit getInstanceRc() {
-        if (null == mInstanceRc) {
+        if (mInstanceRc == null) {
             mInstanceRc = buildRetrofit();
         }
         return mInstanceRc;

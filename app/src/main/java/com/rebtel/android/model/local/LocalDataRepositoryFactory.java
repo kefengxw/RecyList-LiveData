@@ -8,7 +8,7 @@ public class LocalDataRepositoryFactory {
     private static volatile LocalDataRepository mInstanceRepoDb = null;
 
     public static synchronized LocalDataRepository getInstanceRepoDb() {
-        if (null == mInstanceRepoDb) {
+        if (mInstanceRepoDb == null) {
             mInstanceRepoDb = new LocalDataRepository(HomeApplication.getInstanceDao());
         }
         return mInstanceRepoDb;

@@ -4,7 +4,7 @@ public class RemoteDataInfoServiceFactory {
     private static volatile RemoteDataInfoService mInstanceService = null;
 
     public static synchronized RemoteDataInfoService getInstanceService() {
-        if (null == mInstanceService) {
+        if (mInstanceService == null) {
             mInstanceService = RetrofitClient.createService(RemoteDataInfoService.class);
         }
         return mInstanceService;

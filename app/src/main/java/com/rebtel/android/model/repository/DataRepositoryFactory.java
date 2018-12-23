@@ -6,7 +6,7 @@ public class DataRepositoryFactory {
     private static volatile DataRepository mInstanceRepo = null;
 
     public static synchronized DataRepository getInstanceRepo() {
-        if (null == mInstanceRepo) {
+        if (mInstanceRepo == null) {
             mInstanceRepo = new DataRepository(HomeApplication.getInstanceDao(), HomeApplication.getInstanceService(), HomeApplication.getInstanceEx());
         }
         return mInstanceRepo;

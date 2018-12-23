@@ -47,7 +47,7 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     @Override
     public RecyclerHolder onCreateViewHolder(@NonNull ViewGroup vg, int i) {
         View itemView = LayoutInflater.from(vg.getContext()).inflate(R.layout.item_recycler_view, vg, false);
-        return new RecyclerHolder(itemView);
+        return new RecyclerHolder(itemView, mListener);
     }
 
     @Override
@@ -56,14 +56,14 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
         //after testing, it is better to update directly in one thread
         //new LoadImageAsyncTask(mCtx, currentData, holder).execute();
         int flagId = currentData.getFlagId();
-        if (0 == flagId) {
+        if (flagId == 0) {
             String flag = (IC_FLAG_FILE + currentData.getAlpha2Code().toLowerCase());
             flagId = mResources.getIdentifier(flag, IC_FLAG_FOLDER, mPackageName);
             currentData.setFlagId(flagId);
         }
 
         String country = currentData.getCallId();
-        if (null == country) {
+        if (country == null) {
             country = currentData.getName() + CALL_CODE_LEFT + currentData.getCallCode() + CALL_CODE_RIGHT;
             currentData.setCallId(country);
         }
@@ -78,22 +78,24 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(ItemRecyclerDisplayData data);
+        void onItemClick(int position);
     }
 
     public void setItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
-    class RecyclerHolder extends RecyclerView.ViewHolder {//can be static class if outside want to use it
+    public static class RecyclerHolder extends RecyclerView.ViewHolder {//can be static class if outside want to use it
 
+        private OnItemClickListener mItemLer = null;
         private ImageView mIvFlag = null;
         private TextView mTvName = null;
 
-        public RecyclerHolder(@NonNull View itemView) {
+        public RecyclerHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mIvFlag = itemView.findViewById(R.id.item_flag);
             mTvName = itemView.findViewById(R.id.item_text);
+            mItemLer = listener;
 
             itemView.setOnClickListener(onClickListener);
         }
@@ -102,8 +104,8 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
             @Override
             public void onClick(View view) {
                 int position = getAdapterPosition();
-                if ((null != mListener) && (RecyclerView.NO_POSITION != position)) {
-                    mListener.onItemClick(mData.get(position));
+                if ((mItemLer != null) && (position != RecyclerView.NO_POSITION)) {
+                    mItemLer.onItemClick(position);
                 }
             }
         };

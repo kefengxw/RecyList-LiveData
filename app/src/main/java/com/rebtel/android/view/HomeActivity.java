@@ -95,7 +95,7 @@ public class HomeActivity extends AppCompatActivity {
     private void getIntentPara(Intent intent) {
         //Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if (null != bundle) {
+        if (bundle != null) {
             getIdDataFromBundle(bundle);
         }
     }

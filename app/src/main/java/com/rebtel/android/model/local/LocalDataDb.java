@@ -14,7 +14,7 @@ public abstract class LocalDataDb extends RoomDatabase {
     public abstract LocalDataDao localDataDao();
 
     public static synchronized LocalDataDb getInstanceDb(Context ctx) {
-        if (null == mInstanceDb) {
+        if (mInstanceDb == null) {
             mInstanceDb = Room.databaseBuilder(ctx.getApplicationContext(),
                     LocalDataDb.class, "local_database")
                     //.allowMainThreadQueries()

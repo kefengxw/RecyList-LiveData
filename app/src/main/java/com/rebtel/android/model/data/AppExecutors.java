@@ -16,7 +16,7 @@ public class AppExecutors {
     private Executor mMainThread;
 
     public static AppExecutors getInstanceEx() {
-        if (null == mInstanceEx) {
+        if (mInstanceEx == null) {
             mInstanceEx = new AppExecutors(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
                     new MainThreadExecutor());
         }
