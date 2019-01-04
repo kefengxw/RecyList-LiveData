@@ -57,6 +57,4 @@ public class RecyListDataViewModel extends AndroidViewModel {
         //all the logical is done by ViewModel
         return mLocalRepos.getDataByName(input.toLowerCase() + "%");
     }
-
-
 }

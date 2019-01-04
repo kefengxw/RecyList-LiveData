@@ -13,4 +13,5 @@ public class InternalDataConfiguration {
     public static final int INTENT_RQ_CODE = 0x01;
     public static final float INDEX_BAR_LETTER_SPLIT = 0.819f;//decide by Golden Section 0.618
     public static final int SHARED_MODE_PRIVATE = 0x0000;
+
 }
