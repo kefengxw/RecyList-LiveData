@@ -25,8 +25,8 @@ public class RecyclerAdapter extends Adapter<RecyclerAdapter.RecyclerHolder> {
 
     private static String mPackageName = null;
     private static Resources mResources = null;
-    private ArrayList<ItemRecyclerDisplayData> mData = new ArrayList<>();
     private OnItemClickListener mListener = null;
+    private ArrayList<ItemRecyclerDisplayData> mData = new ArrayList<>();//null;
 
     public RecyclerAdapter(Context ctx) {
 

@@ -17,8 +17,10 @@ public class AppExecutors {
 
     public static AppExecutors getInstanceEx() {
         if (mInstanceEx == null) {
-            mInstanceEx = new AppExecutors(Executors.newSingleThreadExecutor(), Executors.newFixedThreadPool(3),
-                    new MainThreadExecutor());
+            mInstanceEx = new AppExecutors(
+                    Executors.newSingleThreadExecutor(),//DiskIO
+                    Executors.newFixedThreadPool(1),//NetworkIO
+                    new MainThreadExecutor());//MainThread
         }
         return mInstanceEx;
     }
@@ -52,5 +54,17 @@ public class AppExecutors {
 
     public Executor getMainThread() {
         return mMainThread;
+    }
+
+    public void runOnDiskIO(Runnable it) {
+        mDiskIO.execute(it);
+    }
+
+    public void runOnNetwork(Runnable it) {
+        mNetworkIO.execute(it);
+    }
+
+    public void runOnMainThread(Runnable it) {
+        mMainThread.execute(it);
     }
 }

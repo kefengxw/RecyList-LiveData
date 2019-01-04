@@ -45,12 +45,18 @@ public class RecyListDataViewModel extends AndroidViewModel {
         return mFilterData;
     }
 
+    public void setFilter(String input) {
+
+        String it = input.trim();
+        if (it.trim().length() > 0) {//only handle valid input, all logical is done by ViewModel
+            mFilter.setValue(it);//Improvement 1: To avoid subscribe and unsubscribe each time
+        }
+    }
+
     private LiveData<List<DisplayData>> getDataByName(String input) {
         //all the logical is done by ViewModel
         return mLocalRepos.getDataByName(input.toLowerCase() + "%");
     }
 
-    public void setFilter(String input) {
-        mFilter.setValue(input);//Improvement 1: To avoid subscribe and unsubscribe each time
-    }
+
 }

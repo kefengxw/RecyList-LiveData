@@ -6,22 +6,23 @@ import android.support.annotation.Nullable;
 
 import com.rebtel.android.model.data.AppExecutors;
 import com.rebtel.android.model.local.LocalBean;
-import com.rebtel.android.model.local.LocalDataDao;
+import com.rebtel.android.model.local.LocalDataRepository;
 import com.rebtel.android.model.remote.ApiResponse;
 import com.rebtel.android.model.remote.RemoteBean;
 import com.rebtel.android.model.remote.RemoteDataInfoService;
 import com.rebtel.android.model.remote.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataRepository {
 
     private AppExecutors mAppExecutors = null;
-    private LocalDataDao mLocalDataDao = null;
+    private LocalDataRepository mLocalDataRepository = null;
     private RemoteDataInfoService mRemoteDataInfoService = null;
 
-    public DataRepository(LocalDataDao local, RemoteDataInfoService remote, AppExecutors appExecutors) {
-        this.mLocalDataDao = local;
+    public DataRepository(LocalDataRepository local, RemoteDataInfoService remote, AppExecutors appExecutors) {
+        this.mLocalDataRepository = local;
         this.mRemoteDataInfoService = remote;
         this.mAppExecutors = appExecutors;
     }
@@ -32,7 +33,7 @@ public class DataRepository {
             @NonNull
             @Override
             protected LiveData<List<DisplayData>> loadFromDb() {
-                return mLocalDataDao.getAllDataFromDb();
+                return mLocalDataRepository.getAllDataFromDb();
             }
 
             @Override
@@ -71,6 +72,8 @@ public class DataRepository {
         RemoteBean item = null;
         List<String> code = null;
         String codeTmp = null;
+        //just for improve the data from network, it inserts DB n times, and trigger update UI n times, should Update 1 times
+        List<LocalBean> tmpList = new ArrayList<>();
 
         if (data == null || data.isEmpty()) {
             return;
@@ -93,8 +96,11 @@ public class DataRepository {
                     continue;
                 }
 
-                mLocalDataDao.insert(new LocalBean(item.name, item.alpha2Code, codeTmp, item.nativeName));
+                //avoid to many data from network, change to LocalDataRepository to operator the database(Single principle)
+                tmpList.add(new LocalBean(item.name, item.alpha2Code, codeTmp, item.nativeName));
             }
         }
+
+        mLocalDataRepository.insert(tmpList);
     }
 }

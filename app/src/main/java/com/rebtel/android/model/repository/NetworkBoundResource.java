@@ -40,9 +40,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             mResult.removeSource(dbSource);
 
             if ((response != null) && (response.isSuccessful())) {
-                mAppExecutors.getDiskIO().execute(() -> { //database thread
+                mAppExecutors.runOnDiskIO(() -> { //database thread
                     saveCallResultToDb(processResponse(response));
-                    mAppExecutors.getMainThread().execute( //back to UI thread
+                    mAppExecutors.runOnMainThread( //back to UI thread
                             //loadFromDb() is to avoid saveCallResult still ongoing
                             () -> mResult.addSource(loadFromDb(), it -> mResult.setValue(Resource.success(it))));
                 });

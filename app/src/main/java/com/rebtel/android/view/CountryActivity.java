@@ -83,6 +83,7 @@ public class CountryActivity extends AppCompatActivity {
     }
 
     private void buildToolBarView() {
+
         Toolbar toolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

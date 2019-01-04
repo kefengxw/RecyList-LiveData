@@ -33,12 +33,13 @@ public class HomeApplication extends Application {
         //Thread
         mAppExecutors = AppExecutors.getInstanceEx();
         //database(local)
-        mInstanceDao = LocalDataDb.getInstanceDb(mInstanceApp).localDataDao();
+        mInstanceDao = LocalDataDb.getInstanceDb(getInstanceApp()).localDataDao();
         //network(remote)
         mInstanceService = RemoteDataInfoServiceFactory.getInstanceService();
         //DataRepository
-        mInstanceRepos = DataRepositoryFactory.getInstanceRepo();
         mInstanceReposDb = LocalDataRepositoryFactory.getInstanceRepoDb();
+        //depend on mInstanceReposDb, so call it after getInstanceRepoDb
+        mInstanceRepos = DataRepositoryFactory.getInstanceRepo();
         //other, debug, log,
         //Timber here;
     }

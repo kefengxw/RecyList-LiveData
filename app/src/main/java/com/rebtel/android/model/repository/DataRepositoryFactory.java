@@ -7,7 +7,7 @@ public class DataRepositoryFactory {
 
     public static synchronized DataRepository getInstanceRepo() {
         if (mInstanceRepo == null) {
-            mInstanceRepo = new DataRepository(HomeApplication.getInstanceDao(), HomeApplication.getInstanceService(), HomeApplication.getInstanceEx());
+            mInstanceRepo = new DataRepository(HomeApplication.getInstanceReposDb(), HomeApplication.getInstanceService(), HomeApplication.getInstanceEx());
         }
         return mInstanceRepo;
     }

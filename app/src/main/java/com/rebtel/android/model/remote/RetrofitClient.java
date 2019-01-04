@@ -3,6 +3,7 @@ package com.rebtel.android.model.remote;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rebtel.android.model.data.ExternalDataConfiguration;
+import com.rebtel.android.model.data.HomeApplication;
 
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
@@ -34,6 +35,7 @@ public class RetrofitClient {
         Retrofit.Builder rbuilder = new Retrofit.Builder();
         rbuilder.baseUrl(ExternalDataConfiguration.BASE_URL)
                 //.client(buildOkHttpClient())
+                .callbackExecutor(HomeApplication.getInstanceEx().getNetworkIO())
                 .addCallAdapterFactory(buildCallAdapterFactory())
                 .addConverterFactory(buildConverterFactory());
         return rbuilder.build();

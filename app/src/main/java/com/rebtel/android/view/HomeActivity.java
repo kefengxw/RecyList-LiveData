@@ -16,15 +16,8 @@ import android.widget.Toast;
 import com.rebtel.android.R;
 import com.rebtel.android.Util.UtilBundle;
 
-import static com.rebtel.android.model.data.ExternalDataConfiguration.DEFAULT_CALL_CODE;
-import static com.rebtel.android.model.data.ExternalDataConfiguration.DEFAULT_FLAG;
-import static com.rebtel.android.model.data.InternalDataConfiguration.CALL_ID;
-import static com.rebtel.android.model.data.InternalDataConfiguration.FLAG_ID;
-import static com.rebtel.android.model.data.InternalDataConfiguration.HOME_SETTING;
-import static com.rebtel.android.model.data.InternalDataConfiguration.IC_FLAG_FILE;
-import static com.rebtel.android.model.data.InternalDataConfiguration.IC_FLAG_FOLDER;
-import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
-import static com.rebtel.android.model.data.InternalDataConfiguration.START_CALL_CODE;
+import static com.rebtel.android.model.data.ExternalDataConfiguration.*;
+import static com.rebtel.android.model.data.InternalDataConfiguration.*;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -139,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void saveUserDataForNextOpen() {
         //only save flagCode/callCode, can not do with password
-        SharedPreferences setting = getSharedPreferences(HOME_SETTING, 0);
+        SharedPreferences setting = getSharedPreferences(HOME_SETTING, SHARED_MODE_PRIVATE);
         SharedPreferences.Editor editor = setting.edit();
         editor.putString(FLAG_ID, mFlagCode);
         editor.putString(CALL_ID, mCallCode);
@@ -148,7 +141,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void getUserData() {
 
-        SharedPreferences setting = getSharedPreferences(HOME_SETTING, 0);
+        SharedPreferences setting = getSharedPreferences(HOME_SETTING, SHARED_MODE_PRIVATE);
         mFlagCode = setting.getString(FLAG_ID, DEFAULT_FLAG);
         mCallCode = setting.getString(CALL_ID, DEFAULT_CALL_CODE);
     }
