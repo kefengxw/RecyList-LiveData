@@ -1,4 +1,4 @@
-package com.rebtel.android.Util;
+package com.rebtel.android.util;
 
 import android.os.Bundle;
 

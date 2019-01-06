@@ -13,7 +13,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 import com.rebtel.android.R;
-import com.rebtel.android.Util.UtilString;
+import com.rebtel.android.util.UtilString;
 
 import java.util.ArrayList;
 

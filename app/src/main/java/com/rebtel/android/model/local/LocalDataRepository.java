@@ -3,30 +3,34 @@ package com.rebtel.android.model.local;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.rebtel.android.model.data.AppExecutors;
 import com.rebtel.android.model.data.HomeApplication;
 import com.rebtel.android.model.repository.DisplayData;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class LocalDataRepository {
     //this is just for expansion from architecture aspect
     private LocalDataDao mLocalDataDao = null;
+    private AppExecutors mEx = null;
 
-    public LocalDataRepository(LocalDataDao local) {
-        this.mLocalDataDao = local;
+    public LocalDataRepository(LocalDataDao localDao, AppExecutors appExecutors) {
+        this.mLocalDataDao = localDao;
+        this.mEx = appExecutors;
     }
 
     public void insert(LocalBean it) {
         if (it != null) {
             //LocalBean fLo = it; //new LocalBean(it);
             //new InsertLocationAsyncTask(mLocalDataDao).execute(fLo);
-            HomeApplication.getInstanceEx().runOnDiskIO(() -> mLocalDataDao.insert(it));
+            mEx.runOnDiskIO(() -> mLocalDataDao.insert(it));
         }
     }
 
     public void insert(List<LocalBean> list) {
         if (list != null && list.size() != 0) {
-            HomeApplication.getInstanceEx().runOnDiskIO(() -> {
+            mEx.runOnDiskIO(() -> {
                 for (LocalBean it : list) {
                     mLocalDataDao.insert(it);
                 }
@@ -43,6 +47,7 @@ public class LocalDataRepository {
     }
 
     private static class InsertLocationAsyncTask extends AsyncTask<LocalBean, Void, Void> {
+
         private final LocalDataDao mDao;
 
         public InsertLocationAsyncTask(LocalDataDao it) {

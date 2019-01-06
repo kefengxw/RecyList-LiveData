@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rebtel.android.R;
-import com.rebtel.android.Util.UtilString;
+import com.rebtel.android.util.UtilString;
 
 import java.util.ArrayList;
 

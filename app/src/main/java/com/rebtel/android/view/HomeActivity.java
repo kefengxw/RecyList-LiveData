@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.rebtel.android.R;
-import com.rebtel.android.Util.UtilBundle;
+import com.rebtel.android.util.UtilBundle;
 
 import static com.rebtel.android.model.data.ExternalDataConfiguration.*;
 import static com.rebtel.android.model.data.InternalDataConfiguration.*;

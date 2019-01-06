@@ -13,12 +13,12 @@ import com.rebtel.android.model.remote.Resource;
 
 public abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    private final AppExecutors mAppExecutors;//database, network, UI, 3 threads
+    private final AppExecutors mEx;//database, network, UI, 3 threads
     private final MediatorLiveData<Resource<ResultType>> mResult = new MediatorLiveData<>();
 
     @MainThread
     public NetworkBoundResource(AppExecutors appExecutors) {
-        this.mAppExecutors = appExecutors;
+        this.mEx = appExecutors;
         mResult.setValue(Resource.loading(null));
         final LiveData<ResultType> dbSource = loadFromDb();
         mResult.addSource(dbSource, data -> {
@@ -40,9 +40,9 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             mResult.removeSource(dbSource);
 
             if ((response != null) && (response.isSuccessful())) {
-                mAppExecutors.runOnDiskIO(() -> { //database thread
+                mEx.runOnDiskIO(() -> { //database thread
                     saveCallResultToDb(processResponse(response));
-                    mAppExecutors.runOnMainThread( //back to UI thread
+                    mEx.runOnMainThread( //back to UI thread
                             //loadFromDb() is to avoid saveCallResult still ongoing
                             () -> mResult.addSource(loadFromDb(), it -> mResult.setValue(Resource.success(it))));
                 });

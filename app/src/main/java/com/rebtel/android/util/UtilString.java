@@ -1,4 +1,4 @@
-package com.rebtel.android.Util;
+package com.rebtel.android.util;
 
 public class UtilString {
     //decide index of String, in case of other language, it can be expand by getIndex

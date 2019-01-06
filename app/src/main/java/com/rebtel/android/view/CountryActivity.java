@@ -23,7 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.rebtel.android.R;
-import com.rebtel.android.Util.UtilBundle;
+import com.rebtel.android.util.UtilBundle;
 import com.rebtel.android.model.remote.Resource;
 import com.rebtel.android.model.repository.DisplayData;
 import com.rebtel.android.viewmodel.RecyListDataViewModel;
@@ -174,7 +174,7 @@ public class CountryActivity extends AppCompatActivity {
     }
 
     private void updateViewData(List<DisplayData> listData) {
-        if ((listData != null) && (listData.size() != 0)) {
+        if ((listData != null) && (listData.size() > 0)) {
             prepareItemListData(listData);
             mAdapter.setData(mItemList);
             if (mTitle != null) {
@@ -186,7 +186,7 @@ public class CountryActivity extends AppCompatActivity {
     private Observer<List<DisplayData>> observerFilterData = new Observer<List<DisplayData>>() {
         @Override
         public void onChanged(@Nullable List<DisplayData> listResource) {
-            if ((listResource != null) && (listResource.size() != 0)) {
+            if ((listResource != null) && (listResource.size() > 0)) {
                 prepareItemListData(listResource);
                 mAdapter.setData(mItemList);
             }

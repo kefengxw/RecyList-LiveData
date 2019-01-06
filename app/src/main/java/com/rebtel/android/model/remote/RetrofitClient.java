@@ -2,6 +2,7 @@ package com.rebtel.android.model.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.rebtel.android.model.data.AppExecutors;
 import com.rebtel.android.model.data.ExternalDataConfiguration;
 import com.rebtel.android.model.data.HomeApplication;
 
@@ -14,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static volatile Retrofit mInstanceRc = null;
+    //private AppExecutors mEx = HomeApplication.getInstanceApp().getInstanceEx();
 
     public static synchronized Retrofit getInstanceRc() {
         if (mInstanceRc == null) {

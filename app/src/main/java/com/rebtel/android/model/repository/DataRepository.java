@@ -10,6 +10,7 @@ import com.rebtel.android.model.local.LocalDataRepository;
 import com.rebtel.android.model.remote.ApiResponse;
 import com.rebtel.android.model.remote.RemoteBean;
 import com.rebtel.android.model.remote.RemoteDataInfoService;
+import com.rebtel.android.model.remote.RemoteDataRepository;
 import com.rebtel.android.model.remote.Resource;
 
 import java.util.ArrayList;
@@ -17,18 +18,19 @@ import java.util.List;
 
 public class DataRepository {
 
-    private AppExecutors mAppExecutors = null;
+    private AppExecutors mEx = null;
     private LocalDataRepository mLocalDataRepository = null;
-    private RemoteDataInfoService mRemoteDataInfoService = null;
+    private RemoteDataRepository mRemoteDataRepository = null;
 
-    public DataRepository(LocalDataRepository local, RemoteDataInfoService remote, AppExecutors appExecutors) {
+    public DataRepository(LocalDataRepository local, RemoteDataRepository remote, AppExecutors appExecutors) {
         this.mLocalDataRepository = local;
-        this.mRemoteDataInfoService = remote;
-        this.mAppExecutors = appExecutors;
+        this.mRemoteDataRepository = remote;
+        this.mEx = appExecutors;
     }
 
     public LiveData<Resource<List<DisplayData>>> getAllDisplayData() {
-        final NetworkBoundResource<List<DisplayData>, List<RemoteBean>> nBResource = new NetworkBoundResource<List<DisplayData>, List<RemoteBean>>(mAppExecutors) {
+        final NetworkBoundResource<List<DisplayData>, List<RemoteBean>> nBResource
+                = new NetworkBoundResource<List<DisplayData>, List<RemoteBean>>(mEx) {
 
             @NonNull
             @Override
@@ -49,7 +51,7 @@ public class DataRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<RemoteBean>>> createNetworkCall() {
-                LiveData<ApiResponse<List<RemoteBean>>> call = mRemoteDataInfoService.getRemoteInfoAll();
+                LiveData<ApiResponse<List<RemoteBean>>> call = mRemoteDataRepository.getRemoteInfoAll();
                 return call;//should change it, add input parameter
             }
 
