@@ -1,4 +1,4 @@
-package com.rebtel.android.di;
+package com.rebtel.android.di.builders;
 
 import com.rebtel.android.model.data.HomeApplication;
 
@@ -6,8 +6,8 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class AppBuildersModule {
+public abstract class ApplicationBuildersModule {
 
     @ContributesAndroidInjector
-    abstract HomeApplication contributeHomeApplication();
+    abstract public HomeApplication contributeHomeApplication();
 }

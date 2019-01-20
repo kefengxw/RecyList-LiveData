@@ -1,14 +1,14 @@
 package com.rebtel.android.model.remote;
 
-import com.rebtel.android.model.data.HomeApplication;
-
 public class RemoteDataRepositoryFactory {
 
     private static volatile RemoteDataRepository mInstanceReposService = null;
 
-    public static synchronized RemoteDataRepository getInstanceReposService() {
+    public static synchronized RemoteDataRepository getInstanceReposService(
+            RemoteDataInfoService remoteDataInfoService) {
+
         if (mInstanceReposService == null) {
-            mInstanceReposService = new RemoteDataRepository(HomeApplication.getInstanceService());
+            mInstanceReposService = new RemoteDataRepository(remoteDataInfoService);
         }
         return mInstanceReposService;
     }

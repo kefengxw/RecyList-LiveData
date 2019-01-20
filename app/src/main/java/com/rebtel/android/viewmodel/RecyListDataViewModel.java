@@ -29,8 +29,10 @@ public class RecyListDataViewModel extends AndroidViewModel {
     }
 
     private void initViewModel(Application app) {
-        mRepos = HomeApplication.getInstanceRepos();
-        mLocalRepos = HomeApplication.getInstanceReposDb();
+        HomeApplication mInstanceApp = HomeApplication.getInstanceApp();
+
+        mRepos = mInstanceApp.getInstanceRepos();
+        mLocalRepos = mInstanceApp.getInstanceReposDb();
         mAllData = mRepos.getAllDisplayData();
         mFilterData = Transformations.switchMap(mFilter, it -> {
             return getDataByName(it);
@@ -56,5 +58,10 @@ public class RecyListDataViewModel extends AndroidViewModel {
     private LiveData<List<DisplayData>> getDataByName(String input) {
         //all the logical is done by ViewModel
         return mLocalRepos.getDataByName(input.toLowerCase() + "%");
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
     }
 }

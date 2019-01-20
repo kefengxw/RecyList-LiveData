@@ -6,6 +6,10 @@ import com.rebtel.android.model.data.AppExecutors;
 import com.rebtel.android.model.data.ExternalDataConfiguration;
 import com.rebtel.android.model.data.HomeApplication;
 
+import java.util.concurrent.Executor;
+
+import javax.inject.Inject;
+
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -15,11 +19,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static volatile Retrofit mInstanceRc = null;
-    //private AppExecutors mEx = HomeApplication.getInstanceApp().getInstanceEx();
 
-    public static synchronized Retrofit getInstanceRc() {
+    public static synchronized Retrofit getInstanceRc(AppExecutors appExecutors) {
         if (mInstanceRc == null) {
-            mInstanceRc = buildRetrofit();
+            mInstanceRc = buildRetrofit(appExecutors);
         }
         return mInstanceRc;
     }
@@ -29,15 +32,15 @@ public class RetrofitClient {
     }
 
     //Might many remote service to Expansion, check it later
-    public static <T> T createService(Class<T> service) {
-        return getInstanceRc().create(service);
+    public static <T> T createService(Class<T> service, AppExecutors appExecutors) {
+        return getInstanceRc(appExecutors).create(service);
     }
 
-    private static Retrofit buildRetrofit() {
+    private static Retrofit buildRetrofit(AppExecutors appExecutors) {
         Retrofit.Builder rbuilder = new Retrofit.Builder();
         rbuilder.baseUrl(ExternalDataConfiguration.BASE_URL)
-                //.client(buildOkHttpClient())
-                .callbackExecutor(HomeApplication.getInstanceEx().getNetworkIO())
+                .client(buildOkHttpClient())
+                .callbackExecutor(buildRetrofitExecutor(appExecutors))
                 .addCallAdapterFactory(buildCallAdapterFactory())
                 .addConverterFactory(buildConverterFactory());
         return rbuilder.build();
@@ -56,5 +59,9 @@ public class RetrofitClient {
 
     private static CallAdapter.Factory buildCallAdapterFactory() {
         return new LiveDataCallAdapterFactory();
+    }
+
+    private static Executor buildRetrofitExecutor(AppExecutors appExecutors) {
+        return appExecutors.getNetworkIO();
     }
 }

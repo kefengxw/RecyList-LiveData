@@ -19,7 +19,7 @@ import com.rebtel.android.util.UtilBundle;
 import static com.rebtel.android.model.data.ExternalDataConfiguration.*;
 import static com.rebtel.android.model.data.InternalDataConfiguration.*;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     private EditText mTextTelNum = null;
     private ImageView mImageFlag = null;

@@ -37,7 +37,7 @@ import static com.rebtel.android.model.remote.Resource.Status.ERROR;
 import static com.rebtel.android.model.remote.Resource.Status.LOADING;
 import static com.rebtel.android.model.remote.Resource.Status.SUCCESS;
 
-public class CountryActivity extends AppCompatActivity {
+public class CountryActivity extends BaseActivity {
 
     private ArrayList<ItemRecyclerDisplayData> mItemList = new ArrayList<>();
     private RecyListDataViewModel mViewModel = null;
@@ -247,4 +247,14 @@ public class CountryActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

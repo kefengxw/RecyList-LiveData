@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
+
 public class AppExecutors {
 
     private static AppExecutors mInstanceEx = null;
@@ -54,6 +57,18 @@ public class AppExecutors {
 
     public Executor getMainThread() {
         return mMainThread;
+    }
+
+    public Scheduler asRxSchedulerDiskIO() {
+        return Schedulers.from(mDiskIO);
+    }
+
+    public Scheduler asRxSchedulerNetwork() {
+        return Schedulers.from(mNetworkIO);
+    }
+
+    public Scheduler asRxSchedulerMainThread() {
+        return Schedulers.from(mMainThread);
     }
 
     public void runOnDiskIO(Runnable it) {
