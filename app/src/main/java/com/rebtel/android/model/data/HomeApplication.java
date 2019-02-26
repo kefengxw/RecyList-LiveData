@@ -52,7 +52,7 @@ public class HomeApplication extends BaseApplication {
     public static HomeApplication getInstanceApp() {
         return mInstanceApp;
     }
-    
+
     @Inject
     public void setAppExecutors(AppExecutors appExecutors) {
         mAppExecutors = appExecutors;

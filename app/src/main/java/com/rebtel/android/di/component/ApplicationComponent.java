@@ -38,3 +38,24 @@ public interface ApplicationComponent extends AndroidInjector<HomeApplication> {
     void inject(HomeActivity homeActivity);
     void inject(CountryActivity countryActivity);*/
 }
+
+
+/*
+@Beta
+public interface AndroidInjector<HomeApplication> {
+    void inject(HomeApplication instance);
+    interface Factory<HomeApplication> {
+        AndroidInjector<HomeApplication> create(HomeApplication instance);
+    }
+
+    abstract class Builder<HomeApplication> implements AndroidInjector.Factory<HomeApplication> {
+        @Override
+        public final AndroidInjector<HomeApplication> create(HomeApplication instance) {
+            seedInstance(instance);
+            return build();
+        }
+        @BindsInstance
+        public abstract void seedInstance(HomeApplication instance);
+        public abstract AndroidInjector<HomeApplication> build();
+    }
+}*/

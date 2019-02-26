@@ -31,13 +31,15 @@ import com.rebtel.android.viewmodel.RecyListDataViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import dagger.android.support.DaggerAppCompatActivity;
+
 import static android.view.View.INVISIBLE;
 import static com.rebtel.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
 import static com.rebtel.android.model.remote.Resource.Status.ERROR;
 import static com.rebtel.android.model.remote.Resource.Status.LOADING;
 import static com.rebtel.android.model.remote.Resource.Status.SUCCESS;
 
-public class CountryActivity extends BaseActivity {
+public class CountryActivity extends AppCompatActivity {
 
     private ArrayList<ItemRecyclerDisplayData> mItemList = new ArrayList<>();
     private RecyListDataViewModel mViewModel = null;
