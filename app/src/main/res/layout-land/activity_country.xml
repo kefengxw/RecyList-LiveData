@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rebtel.android.view.CountryActivity">
+    tools:context="com.RecyList.android.view.CountryActivity">
 
     <include
         android:id="@+id/tool_bar"
@@ -21,7 +21,7 @@
         tools:listitem="@layout/item_recycler_view">
     </android.support.v7.widget.RecyclerView>
 
-    <com.rebtel.android.view.IndexBarView
+    <com.RecyList.android.view.IndexBarView
         android:id="@+id/index_bar"
         android:layout_width="0dp"
         android:layout_height="0dp"

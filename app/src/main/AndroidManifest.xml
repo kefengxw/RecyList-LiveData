@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rebtel.android">
+    package="com.RecyList.android">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".model.data.HomeApplication"
+        android:name="com.RecyList.android.app.HomeApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.HomeActivity">
+        <activity android:name="com.RecyList.android.view.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.CountryActivity"
+            android:name="com.RecyList.android.view.CountryActivity"
             android:theme="@style/ToolBarTheme" />
     </application>
 </manifest>

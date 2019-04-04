@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RebtelTest</string>
+    <string name="app_name">RecyList</string>
     <string name="telephone">+46888888888</string>
     <string name="telephone_hint">Please Input Telephone Numbers</string>
     <string name="item_search_view_hint">Search</string>
