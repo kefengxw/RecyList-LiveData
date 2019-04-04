@@ -16,7 +16,8 @@ public class RepositoryModule {
 
     @Singleton
     @Provides
-    public DataRepository provideDataRepository(LocalDataRepository local, RemoteDataRepository remote, AppExecutors appExecutors) {
+    public DataRepository provideDataRepository(LocalDataRepository local,
+                                                RemoteDataRepository remote, AppExecutors appExecutors) {
         return DataRepositoryFactory.getInstanceRepos(local, remote, appExecutors);
     }
 }

@@ -1,9 +1,6 @@
 package com.RecyList.android.di.module;
 
 import com.RecyList.android.model.data.AppExecutors;
-import com.RecyList.android.model.local.LocalDataDao;
-import com.RecyList.android.model.local.LocalDataRepository;
-import com.RecyList.android.model.local.LocalDataRepositoryFactory;
 import com.RecyList.android.model.remote.RemoteDataInfoService;
 import com.RecyList.android.model.remote.RemoteDataInfoServiceFactory;
 import com.RecyList.android.model.remote.RemoteDataRepository;

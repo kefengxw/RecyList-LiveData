@@ -1,7 +1,5 @@
 package com.RecyList.android.di.component;
 
-import android.app.Application;
-
 import com.RecyList.android.app.HomeApplication;
 import com.RecyList.android.di.module.ApplicationModule;
 import com.RecyList.android.di.module.LocalModule;
@@ -13,7 +11,6 @@ import javax.inject.Singleton;
 import dagger.Component;
 
 @Singleton
-//@Component(modules = {ApplicationModule.class})
 @Component(modules = {
         ApplicationModule.class,
         LocalModule.class,
