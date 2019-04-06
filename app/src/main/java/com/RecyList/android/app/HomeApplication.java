@@ -16,15 +16,14 @@ import javax.inject.Inject;
 
 public class HomeApplication extends Application {
 
-    public static HomeApplication mInstanceApp = null;
-    @Inject
-    public AppExecutors mAppExecutors;// = null;
+    public HomeApplication mInstanceApp = null;
+    public AppExecutors mAppExecutors = null;
     public LocalDataDao mInstanceDao = null;
     public RemoteDataInfoService mInstanceService = null;
     public LocalDataRepository mInstanceReposDb = null;
     public RemoteDataRepository mInstanceReposService = null;
     public DataRepository mInstanceRepos = null;
-    private ApplicationComponent mAppComponent;
+    private ApplicationComponent mAppComponent = null;
 
     @Override
     public void onCreate() {
@@ -34,9 +33,9 @@ public class HomeApplication extends Application {
     }
 
     private void init() {
-        initInjector();
+        initInjector();//Inject
         //application
-        setInstanceApp(this);//this is set after Dagger2
+        //setInstanceApp(this);//this is set after Dagger2
         //Thread
         //database(local)
         //network(remote)
@@ -45,27 +44,23 @@ public class HomeApplication extends Application {
         //Timber here;
     }
 
-    private void initInjector(){
+    private void initInjector() {
         mAppComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
         mAppComponent.inject(this);
     }
 
-    public ApplicationComponent getApplicationComponent(){
+    public ApplicationComponent getApplicationComponent() {
         return mAppComponent;
     }
 
-    //@Inject
+    @Inject
     public void setInstanceApp(HomeApplication instanceApp) {
         this.mInstanceApp = instanceApp;
     }
 
-    public static HomeApplication getInstanceApp() {
-        return mInstanceApp;
-    }
-
-    //@Inject
+    @Inject
     public void setAppExecutors(AppExecutors appExecutors) {
         mAppExecutors = appExecutors;
     }
@@ -93,6 +88,10 @@ public class HomeApplication extends Application {
     @Inject
     public void setInstanceRepos(DataRepository instanceRepos) {
         mInstanceRepos = instanceRepos;
+    }
+
+    public HomeApplication getInstanceApp() {
+        return mInstanceApp;
     }
 
     public AppExecutors getInstanceEx() {
