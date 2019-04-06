@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.RecyList.android.R;
 import com.RecyList.android.di.component.CountryActivityComponent;
+import com.RecyList.android.di.module.CountryActivityModule;
 import com.RecyList.android.model.remote.Resource;
 import com.RecyList.android.model.repository.DisplayData;
 import com.RecyList.android.util.UtilBundle;
@@ -30,6 +31,8 @@ import com.RecyList.android.viewmodel.RecyListDataViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import static android.view.View.INVISIBLE;
 import static com.RecyList.android.model.data.InternalDataConfiguration.INTENT_RQ_CODE;
@@ -62,22 +65,20 @@ public class CountryActivity extends BaseActivity {
         setContentView(R.layout.activity_country);
 
         initInjector();
-
-        setContext();
         initViewModel();
         initView();
     }
 
-    private void setContext() {
-        mCtx = this;
+    @Inject
+    public void setContext(CountryActivity activity) {
+        mCtx = activity;//mCtx = this;
     }
 
     private void initInjector() {
         mComponent = getApplicationComponent()
                 .countryActivityComponent()
-                .activity(this)
+                .countryActivityModule(new CountryActivityModule(this))
                 .build();
-        //new CountryActivityModule(this);
         mComponent.inject(this);
     }
 

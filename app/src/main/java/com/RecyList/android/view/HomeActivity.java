@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +13,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.RecyList.android.R;
+import com.RecyList.android.di.component.HomeActivityComponent;
+import com.RecyList.android.di.module.HomeActivityModule;
 import com.RecyList.android.util.UtilBundle;
+
+import javax.inject.Inject;
 
 import static com.RecyList.android.model.data.ExternalDataConfiguration.*;
 import static com.RecyList.android.model.data.InternalDataConfiguration.*;
 
 public class HomeActivity extends BaseActivity {
 
+    private HomeActivityComponent mComponent = null;
     private EditText mTextTelNum = null;
     private ImageView mImageFlag = null;
     private Button mButtonCall = null;
@@ -33,13 +37,26 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        setContext();
+        initInjector();
         initView();
         initContent();
     }
 
-    private void setContext() {
-        mCtx = this;
+    @Inject
+    public void setContext(HomeActivity activity) {
+        mCtx = activity;//mComponent.getActivity();
+    }
+
+    private void initInjector() {
+        mComponent = getApplicationComponent()
+                .homeActivityComponent()
+                .homeActivityModule(new HomeActivityModule(this))
+                .build();
+        mComponent.inject(this);
+    }
+
+    public HomeActivityComponent getHomeActivityComponent() {
+        return mComponent;
     }
 
     private void initView() {
