@@ -11,11 +11,11 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class ApplicationModule {
+public class HomeApplicationModule {
 
     private HomeApplication mHomeApp;
 
-    public ApplicationModule(HomeApplication app) {
+    public HomeApplicationModule(HomeApplication app) {
         mHomeApp = app;
     }
 

@@ -20,8 +20,8 @@ public class RecyListDataViewModel extends AndroidViewModel {
     private LiveData<Resource<List<DisplayData>>> mAllData = null;//Transformations.map, if need
     private MutableLiveData<String> mFilter = new MutableLiveData<>();
     private LiveData<List<DisplayData>> mFilterData = null;
-    public LocalDataRepository mLocalRepos = null;
-    public DataRepository mRepos = null;
+    private LocalDataRepository mLocalRepos = null;
+    private DataRepository mRepos = null;
 
     public RecyListDataViewModel(@NonNull Application app) {//can be replace by ViewModel not android view model
         super(app);

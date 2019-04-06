@@ -2,9 +2,9 @@ package com.RecyList.android.app;
 
 import android.app.Application;
 
-import com.RecyList.android.di.component.ApplicationComponent;
-import com.RecyList.android.di.component.DaggerApplicationComponent;
-import com.RecyList.android.di.module.ApplicationModule;
+import com.RecyList.android.di.component.HomeApplicationComponent;
+import com.RecyList.android.di.component.DaggerHomeApplicationComponent;
+import com.RecyList.android.di.module.HomeApplicationModule;
 import com.RecyList.android.model.data.AppExecutors;
 import com.RecyList.android.model.local.LocalDataDao;
 import com.RecyList.android.model.local.LocalDataRepository;
@@ -23,7 +23,7 @@ public class HomeApplication extends Application {
     public LocalDataRepository mInstanceReposDb = null;
     public RemoteDataRepository mInstanceReposService = null;
     public DataRepository mInstanceRepos = null;
-    private ApplicationComponent mAppComponent = null;
+    private HomeApplicationComponent mAppComponent = null;
 
     @Override
     public void onCreate() {
@@ -45,13 +45,13 @@ public class HomeApplication extends Application {
     }
 
     private void initInjector() {
-        mAppComponent = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+        mAppComponent = DaggerHomeApplicationComponent.builder()
+                .homeApplicationModule(new HomeApplicationModule(this))
                 .build();
         mAppComponent.inject(this);
     }
 
-    public ApplicationComponent getApplicationComponent() {
+    public HomeApplicationComponent getApplicationComponent() {
         return mAppComponent;
     }
 

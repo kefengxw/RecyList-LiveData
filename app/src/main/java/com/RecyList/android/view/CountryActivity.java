@@ -5,11 +5,10 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Group;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,9 +22,10 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.RecyList.android.R;
-import com.RecyList.android.util.UtilBundle;
+import com.RecyList.android.di.component.CountryActivityComponent;
 import com.RecyList.android.model.remote.Resource;
 import com.RecyList.android.model.repository.DisplayData;
+import com.RecyList.android.util.UtilBundle;
 import com.RecyList.android.viewmodel.RecyListDataViewModel;
 
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ import static com.RecyList.android.model.remote.Resource.Status.SUCCESS;
 
 public class CountryActivity extends BaseActivity {
 
+    private CountryActivityComponent mComponent = null;
     private ArrayList<ItemRecyclerDisplayData> mItemList = new ArrayList<>();
     private RecyListDataViewModel mViewModel = null;
     private RecyclerAdapter mAdapter = null;
@@ -60,6 +61,8 @@ public class CountryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country);
 
+        initInjector();
+
         setContext();
         initViewModel();
         initView();
@@ -67,6 +70,19 @@ public class CountryActivity extends BaseActivity {
 
     private void setContext() {
         mCtx = this;
+    }
+
+    private void initInjector() {
+        mComponent = getApplicationComponent()
+                .countryActivityComponent()
+                .activity(this)
+                .build();
+        //new CountryActivityModule(this);
+        mComponent.inject(this);
+    }
+
+    public CountryActivityComponent getCountryActivityComponent() {
+        return mComponent;
     }
 
     private void initViewModel() {
