@@ -8,6 +8,8 @@ import com.RecyList.android.model.repository.DisplayData;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 public class LocalDataRepository {
     //this is just for expansion from architecture aspect
     private LocalDataDao mLocalDataDao = null;
@@ -36,7 +38,7 @@ public class LocalDataRepository {
         }
     }
 
-    public LiveData<List<DisplayData>> getDataByName(String input) {
+    public Flowable<List<DisplayData>> getDataByName(String input) {
         return mLocalDataDao.getDataFromDbByName(input);
     }
 

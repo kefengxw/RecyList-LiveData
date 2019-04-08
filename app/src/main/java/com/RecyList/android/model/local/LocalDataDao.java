@@ -10,6 +10,8 @@ import com.RecyList.android.model.repository.DisplayData;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 @Dao
 public interface LocalDataDao {
 
@@ -20,5 +22,5 @@ public interface LocalDataDao {
     LiveData<List<DisplayData>> getAllDataFromDb();
 
     @Query("SELECT * FROM local_table WHERE lower(name) LIKE :input ORDER BY name ASC")
-    LiveData<List<DisplayData>> getDataFromDbByName(String input);
+    Flowable<List<DisplayData>> getDataFromDbByName(String input);
 }
