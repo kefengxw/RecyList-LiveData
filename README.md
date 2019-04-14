@@ -1,1 +1,1 @@
-# RecyList Demo with MVVM, Dagger2, RxJava, LiveData and so on
+# RecyList Demo with MVVM, Dagger2, RxJava, LiveData
